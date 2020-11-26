@@ -26,7 +26,6 @@ public class SurveyService {
 
     public ResponseEntity<Survey> createSurvey(String username, Survey survey) {
         try {
-            System.out.println("jeste "+username);
             User user = userService.getUserByLogin(username).get();
             survey.user = user;
             Survey s1 = surveyRepository.save(survey);
@@ -37,9 +36,14 @@ public class SurveyService {
         }
     }
 
-    public ResponseEntity<Boolean> updateSurvey(Survey survey) {
+    public ResponseEntity<Boolean> updateSurvey(Long previousSurveyID, Survey survey) {
         try {
-            surveyRepository.save(survey);
+            Survey previousSurvey = getOneSurvey(previousSurveyID).getBody();
+            previousSurvey.questions.forEach(next-> questionService.deleteQuestionByQuestion(next));
+            previousSurvey.setQuestions(survey.questions);
+            previousSurvey.setTitle(survey.title);
+            previousSurvey.setIsAnonymous(survey.isAnonymous);
+            surveyRepository.save(previousSurvey);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
@@ -56,7 +60,7 @@ public class SurveyService {
     }
     public ResponseEntity<Survey> getOneSurvey(Long id) {
         try {
-            Survey survey = surveyRepository.getOne(id);
+            Survey survey = surveyRepository.findById(id).get();
             return new ResponseEntity<>(survey, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

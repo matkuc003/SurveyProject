@@ -21,7 +21,7 @@ public class InitService {
     }
     @PostConstruct
     public void init() {
-       Role r1 = new Role(0l,"ROLE_ADMIN");
+/*       Role r1 = new Role(0l,"ROLE_ADMIN");
         Role r2 = new Role(0l,"ROLE_USER");
 
         r1 = roleRepository.save(r1);
@@ -32,6 +32,6 @@ public class InitService {
 
         u1 = userService.createUser(u1);
         u2 = userService.createUser(u2);
-        u3 = userService.createUser(u3);
+        u3 = userService.createUser(u3);*/
     }
 }

@@ -52,4 +52,12 @@ public ResponseEntity<Question> getQuestionByID(Long questionID){
         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
 }
+    public ResponseEntity<Boolean> deleteQuestionByQuestion(Question question) {
+        try {
+            questionRepository.delete(question);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
