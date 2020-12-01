@@ -2,6 +2,7 @@ package com.project.survey.service;
 
 import com.project.survey.model.Option;
 import com.project.survey.repositories.OptionRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +42,21 @@ public class OptionService {
     }*/
     public ResponseEntity<Option> getOptionByID(Long optionID){
         try{
-            Option option = optionRepository.getOne(optionID);
+            Option option = optionRepository.findById(optionID).get();
             return new ResponseEntity<>(option,HttpStatus.OK);
         }
         catch(Exception ex)
         {
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+    }
+    public ResponseEntity<Boolean> deleteByOption(Option option){
+        try{
+            optionRepository.delete(option);
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
         }
     }
 }

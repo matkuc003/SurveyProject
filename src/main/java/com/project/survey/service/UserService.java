@@ -36,7 +36,6 @@ public class UserService {
     }
 
     public Optional<User> getUserByLogin(String username) {
-        User tmpUser =  userRepository.findByUsername(username).get();
         return userRepository.findByUsername(username);
     }
 

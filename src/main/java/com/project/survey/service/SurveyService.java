@@ -39,13 +39,19 @@ public class SurveyService {
     public ResponseEntity<Boolean> updateSurvey(Long previousSurveyID, Survey survey) {
         try {
             Survey previousSurvey = getOneSurvey(previousSurveyID).getBody();
-            previousSurvey.questions.forEach(next-> questionService.deleteQuestionByQuestion(next));
+            List<Question> previousQuestions = previousSurvey.questions;
             previousSurvey.setQuestions(survey.questions);
+/*            previousQuestions.stream().forEach(question->
+            {
+                question.options.forEach(next-> optionService.deleteByOption(next));
+                questionService.deleteQuestionByQuestion(question);
+            });*/
             previousSurvey.setTitle(survey.title);
             previousSurvey.setIsAnonymous(survey.isAnonymous);
             surveyRepository.save(previousSurvey);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }

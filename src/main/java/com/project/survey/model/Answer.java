@@ -17,10 +17,13 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answer_id;
     @ManyToOne
-    private User user_id;
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
     @ManyToMany
-    private List<Question> question_id;
-    @ManyToMany
-    private List<Option> option_id;
+    @JoinTable(name = "answer_option", joinColumns = @JoinColumn(name = "answer_id"), inverseJoinColumns = @JoinColumn(name = "option_id"),schema = "dbo")
+    private List<Option> options;
     private String textAreaValue;
+    private Integer ratingValue;
 }

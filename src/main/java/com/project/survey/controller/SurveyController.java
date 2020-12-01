@@ -6,12 +6,10 @@ import com.project.survey.model.Survey;
 import com.project.survey.service.OptionService;
 import com.project.survey.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
