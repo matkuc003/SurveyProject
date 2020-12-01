@@ -1,0 +1,30 @@
+<div style="height: 88vh;">
+  <mat-table [dataSource]="dataSource">
+    <!-- User name Definition -->
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef> Username</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.username}} </mat-cell>
+    </ng-container>
+
+    <!-- Role Definition -->
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef> Role</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.role}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Action Definition -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.action}}
+        <button mat-button [routerLink]="['edit/',row.username]">Edit</button>
+        <button mat-button (click)="deleteOnClick(row)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="['username', 'role', 'action']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['username', 'role', 'action']"></mat-row>
+  </mat-table>
+</div>

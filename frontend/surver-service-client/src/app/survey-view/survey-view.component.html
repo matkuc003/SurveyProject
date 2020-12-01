@@ -1,0 +1,83 @@
+<form *ngIf="surveyForm" [formGroup]="surveyForm" class="surveyMainForm">
+  <mat-form-field class ="surveyTitleForm">
+    <input matInput formControlName="surveyTitle">
+  </mat-form-field>
+  <mat-slide-toggle color="primary" formControlName="IsAnonymous" class="mb-10">Ankieta anonimowa</mat-slide-toggle>
+  <br/>
+  <div formArrayName="surveyQuestions" class="poll-options">
+    <ol class="list-style">
+      <li class="listPoint" *ngFor="let question of surveyForm.get('surveyQuestions')['controls']; let i = index">
+        <div [formGroup]="question" class="form-group">
+          <div>
+            <mat-form-field class="questionTitleForm">
+              <input formControlName="questionTitle" matInput>
+            </mat-form-field>
+            <mat-form-field class="typeSelect">
+              <input formControlName="questionType" matInput>
+            </mat-form-field>
+            <div formGroupName="questionGroup" [ngSwitch]="selectedOption[i]">
+              <div *ngSwitchCase="'Single choice'">
+                <div *ngIf="question.controls.questionGroup.controls.options">
+                  <mat-radio-group formArrayName="options" class="radioGroups">
+                    <div class="optionForm" >
+                      <div *ngFor="let optionCtrl of question.controls.questionGroup.controls.options.controls let j = index" [formGroupName]="j">
+                      <mat-radio-button class="radioButtons" matInput class="radioButtons" value="{{optionCtrl.value.optionText}}" (change)="radioChange(optionCtrl,question)">
+                        <input matInput formControlName="optionText">
+                      </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                  <div *ngIf="question.controls.questionGroup.controls.showRemarksBox.value==true">
+                    <mat-form-field>
+                      <textarea formControlName="showRemarksBox"
+                                placeholder="Uwagi:"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'Multi choice'">
+                <div *ngIf="question.controls.questionGroup.controls.options">
+                  <ul class="question-type" formArrayName="options">
+                    <li
+                      *ngFor="let optionCtrl of question.controls.questionGroup.controls.options.controls let j = index">
+                      <div [formGroupName]="j" class="optionFormMulti">
+                        <mat-checkbox (change)="checkboxChange($event,optionCtrl,question)">
+                         <input matInput class="inputInsideOption" formControlName="optionText">
+                        </mat-checkbox>
+                      </div>
+                    </li>
+                  </ul>
+                  <div *ngIf="question.controls.questionGroup.controls.showRemarksBox.value==true">
+                    <mat-form-field >
+                      <mat-checkbox style="display:none;" formControlName="showRemarksBox">
+                      </mat-checkbox>
+                      <textarea matInput placeholder="Uwagi:"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="'Text'">
+                <mat-form-field >
+                  <textarea matInput placeholder="Odpowiedź:" (blur)="onLeaveTextArea($event,question)"></textarea>
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'Rating'" class="ratingClass">
+                <button mat-icon-button [color]="'primary'"
+                        *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i"
+                        (click)="onClickStar(i+1,question)" [matTooltip]="ratingId+1" matTooltipPosition="above">
+                  <mat-icon>
+                    {{showIconStar(i)}}
+                  </mat-icon>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </li>
+    </ol>
+    <div class="button-row">
+      <button mat-raised-button color="primary" [routerLink]="'/home/surveys'"  (click)="onSend()">Wyślij</button>
+    </div>
+  </div>
+</form>

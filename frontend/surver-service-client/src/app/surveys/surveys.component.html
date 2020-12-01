@@ -1,0 +1,37 @@
+<h1 class = "pageTitle">TWOJE ANKIETY</h1>
+<mat-grid-list cols="8" rowHeight="2:1">
+  <mat-grid-tile
+  *ngFor="let tile of tiles"
+  [colspan]="2"
+  [rowspan]="2">
+    <mat-card-content>
+    <div class = "titleDiv">
+    {{tile.title}}
+    </div>
+    <div class = "buttonsDiv">
+    <button mat-icon-button [routerLink]="['survey-view/',tile.survey_id]">
+      <mat-icon>find_in_page</mat-icon>
+    </button>
+      <button mat-icon-button>
+      <mat-icon>trending_up</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="['edit-survey/',tile.survey_id]">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onDelete(tile)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+    </div>
+    </mat-card-content>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="2"
+    [rowspan]="2">
+    <button mat-icon-button class="addButton"  [routerLink]="'create-survey'">
+      <mat-icon class="addIcon">add</mat-icon>
+    </button>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,34 @@
+<mat-toolbar  color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>   SurveyMaker</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <!--  <a mat-button [routerLink]="'/accounts'"> Accounts </a> -->
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <span style="font-size: 12px;">SurveyMaker pozwala Ci na tworzenie ankiet w prosty i wygodny sposób.</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/home'"> Witaj, {{username}} </a>
+      <a mat-list-item [routerLink]="['admin/edit/',username]">Moje Konto</a>
+      <a mat-list-item [routerLink]="['surveys']">Moje Ankiety</a>
+      <a mat-list-item [routerLink]="['contact']">Kontakt</a>
+      <a mat-list-item (click)="logout()"> Wyloguj </a>
+      <a mat-list-item [routerLink]="['admin']">Panel Administracyjny</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

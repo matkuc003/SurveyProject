@@ -1,0 +1,41 @@
+<div style="height: 88vh;">
+  <form class="example-form" name="formMain">
+    <mat-form-field class="example-full-width" name="fieldUser">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="userToEdit.username" name="username"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" name="fieldPassword">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="userToEdit.password" name="password"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" name="fieldEmail">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="userToEdit.email" name="email"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" name="fieldPhone">
+      <mat-label>PhoneNumber</mat-label>
+      <input matInput [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" name="fieldYear">
+      <mat-label>Year</mat-label>
+      <input matInput [(ngModel)]="userToEdit.year" name="year"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" name="fieldRoles">
+      <mat-label>Roles</mat-label>
+      <input matInput [(ngModel)]="userToEdit.roles.role" name="roles"/>
+    </mat-form-field>
+    <br>
+    <mat-label>Active</mat-label>
+    <mat-checkbox [(ngModel)]="userToEdit.active" name="active"></mat-checkbox>
+    <br>
+    <div class="example-button-row">
+      <button mat-raised-button (click)="onSaveClick()">Zapisz</button>
+      <button mat-raised-button (click)="onCancelClick()">Anuluj</button>
+    </div>
+  </form>
+</div>
