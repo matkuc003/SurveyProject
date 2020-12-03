@@ -5,7 +5,7 @@ import {SurveyRestApiService} from "../survey-rest-api.service";
 import {RestApiService} from "../restapi.service";
 import {UserModel} from "../model/UserModel";
 import {Option} from "../model/Option";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {Question} from "../model/Question";
 
 export interface QuestionType {
@@ -33,7 +33,7 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
   ];
 
 
-  constructor(private route: ActivatedRoute, public surveyRestApiService: SurveyRestApiService, private userRestApi: RestApiService) {
+  constructor(private router: Router,private route: ActivatedRoute, public surveyRestApiService: SurveyRestApiService, private userRestApi: RestApiService) {
   }
 
   ngOnInit(): void {
@@ -178,10 +178,11 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
         let idEditedSurvey;
         console.log(survey);
         this.route.paramMap.subscribe(params => {
-          idEditedSurvey = Number(params.get("id"));
+          idEditedSurvey = params.get("id");
           this.surveyRestApiService.updateSurvey(idEditedSurvey,survey).subscribe(message=>console.log(message));
         })
 
       }
+      this.router.navigate(['/home/surveys']);
   }
 }

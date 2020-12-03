@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class SurveyService {
@@ -36,7 +37,7 @@ public class SurveyService {
         }
     }
 
-    public ResponseEntity<Boolean> updateSurvey(Long previousSurveyID, Survey survey) {
+    public ResponseEntity<Boolean> updateSurvey(String previousSurveyID, Survey survey) {
         try {
             Survey previousSurvey = getOneSurvey(previousSurveyID).getBody();
             List<Question> previousQuestions = previousSurvey.questions;
@@ -64,9 +65,9 @@ public class SurveyService {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-    public ResponseEntity<Survey> getOneSurvey(Long id) {
+    public ResponseEntity<Survey> getOneSurvey(String id) {
         try {
-            Survey survey = surveyRepository.findById(id).get();
+            Survey survey = surveyRepository.findById(UUID.fromString(id)).get();
             return new ResponseEntity<>(survey, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

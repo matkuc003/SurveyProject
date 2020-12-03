@@ -24,6 +24,7 @@ import { EditSurveyComponent } from './edit-survey/edit-survey.component';
 import { SurveyViewComponent } from './survey-view/survey-view.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 export function tokenGetter() {
   return localStorage.getItem("jwt");
 }
@@ -60,7 +61,8 @@ const JWT_Module_Options: JwtModuleOptions = {
         MatGridListModule,
         MatCardModule,
         MatRadioModule,
-        MatTooltipModule
+        MatTooltipModule,
+        ClipboardModule
     ],
   providers: [JwtHelperService, RestApiService],
   bootstrap: [AppComponent]

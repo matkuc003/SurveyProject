@@ -52,7 +52,7 @@ export class SurveyRestApiService {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
     return this.http.get<Array<Survey>>("http://localhost:8080/api/survey/getAllSurveys/"+username,{headers})
   }
-  public getSurveyByID(surveyID:number)
+  public getSurveyByID(surveyID:String)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
     return this.http.get<Survey>("http://localhost:8080/api/survey/getSurvey/"+surveyID,{headers})

@@ -5,7 +5,6 @@ import {Option} from "../model/Option";
 import {ActivatedRoute} from "@angular/router";
 import {SurveyRestApiService} from "../survey-rest-api.service";
 import {Survey} from "../model/Survey";
-import {MatRadioChange} from "@angular/material/radio";
 import {Answer} from "../model/Answer";
 
 @Component({
@@ -23,14 +22,14 @@ export class SurveyViewComponent implements OnInit {
   selectedOption = [];
   surveyToView: Survey;
   surveyForm: FormGroup;
-  surveyIDToView: number;
+  surveyIDToView: String;
 
   constructor(private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-        this.surveyIDToView = Number(params.get("id"));
+        this.surveyIDToView = params.get("id");
       }
     )
     this.surveyRestApiService.getSurveyByID(this.surveyIDToView).subscribe(message => {

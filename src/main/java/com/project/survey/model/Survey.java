@@ -3,10 +3,12 @@ package com.project.survey.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Survey", schema = "dbo")
@@ -15,8 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Survey {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long survey_id;
+    public UUID survey_id = UUID.randomUUID();
     public String title;
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "survey_id")

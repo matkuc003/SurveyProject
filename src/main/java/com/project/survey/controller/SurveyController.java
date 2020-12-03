@@ -28,7 +28,7 @@ public class SurveyController {
     }
 
     @GetMapping("/getSurvey/{id}")
-    public ResponseEntity<Survey> getSurveyByID(@PathVariable Long id){
+    public ResponseEntity<Survey> getSurveyByID(@PathVariable String id){
         return surveyService.getOneSurvey(id);
     }
 
@@ -40,7 +40,7 @@ public class SurveyController {
     }
 
     @PutMapping("/updateSurvey/{previousSurveyID}")
-    public ResponseEntity<Boolean> updateSurvey(@PathVariable Long previousSurveyID,@RequestBody Survey survey){
+    public ResponseEntity<Boolean> updateSurvey(@PathVariable String previousSurveyID,@RequestBody Survey survey){
         return surveyService.updateSurvey(previousSurveyID,survey);
     }
 

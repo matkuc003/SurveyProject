@@ -14,14 +14,14 @@ import {Option} from "../model/Option";
 export class EditSurveyComponent implements OnInit {
   surveyToEdit: Survey;
   surveyToEditFormGroup: FormGroup;
-  surveyIDToEdit: number;
+  surveyIDToEdit: String;
 
   constructor(private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-        this.surveyIDToEdit = Number(params.get("id"));
+        this.surveyIDToEdit = params.get("id");
         this.surveyRestApiService.getSurveyByID(this.surveyIDToEdit).subscribe(message => {
           this.surveyToEdit = message;
           console.log(message)

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {SurveyRestApiService} from "../survey-rest-api.service";
 import {Survey} from "../model/Survey";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-surveys',
@@ -8,23 +10,34 @@ import {Survey} from "../model/Survey";
   styleUrls: ['./surveys.component.css']
 })
 export class SurveysComponent implements OnInit {
-  surveysArray:Array<Survey>;
-  tiles=[]
-  constructor(private surveyRestApiService:SurveyRestApiService) { }
+  surveysArray: Array<Survey>;
+  tiles = []
+  hostname;
+
+  constructor(private snackBar: MatSnackBar, private surveyRestApiService: SurveyRestApiService) {
+    this.hostname = window.location.href;
+  }
 
   ngOnInit(): void {
     this.getSurveys();
   }
 
-  getSurveys(){
-    this.surveyRestApiService.getSurveysByUsername().subscribe(message=> {
+  getSurveys() {
+    this.surveyRestApiService.getSurveysByUsername().subscribe(message => {
         this.surveysArray = message;
         this.tiles = this.surveysArray;
       }
     );
   }
-  onDelete(survey:Survey){
-    this.surveysArray.splice(this.surveysArray.indexOf(survey),1);
-    this.surveyRestApiService.deleteSurvey(survey).subscribe(message=>console.log(message));
+
+  onDelete(survey: Survey) {
+    this.surveysArray.splice(this.surveysArray.indexOf(survey), 1);
+    this.surveyRestApiService.deleteSurvey(survey).subscribe(message => console.log(message));
+  }
+
+  onShare() {
+    this.snackBar.open("Link do ankiety został skopiowany do schowka.", "Ok", {
+      duration: 2000,
+    });
   }
 }
