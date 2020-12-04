@@ -6,4 +6,4 @@ export interface Survey {
   questions: Array<Question>,
   isAnonymous: boolean,
   user: UserModel
-} 4 
+}

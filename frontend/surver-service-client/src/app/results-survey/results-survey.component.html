@@ -1,0 +1,28 @@
+<p>results-survey works!</p>
+<div  *ngIf="surveyQuestions">
+  <mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile
+    *ngFor="let question of surveyQuestions"
+    [colspan]="2"
+    [rowspan]="2">
+    <div>
+    <mat-radio-group [(ngModel)]="question['chartType']">
+      <mat-radio-button value ="bar">bar</mat-radio-button>
+      <mat-radio-button value ="doughnut">doughnut</mat-radio-button>
+      <mat-radio-button value ="pie">pie</mat-radio-button>
+      <mat-radio-button value ="line">line</mat-radio-button>
+    </mat-radio-group>
+      <canvas baseChart
+          [chartType]="question['chartType']"
+          [datasets]="question['chartDatasets']"
+          [labels]="question['chartLabels']"
+          [colors]="chartColors"
+          [options]="chartOptions"
+          [legend]="true"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+  </canvas>
+    </div>
+  </mat-grid-tile>
+  </mat-grid-list>
+</div>

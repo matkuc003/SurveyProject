@@ -5,6 +5,8 @@ import {RestApiService} from "./restapi.service";
 import {Option} from "./model/Option";
 import {Question} from "./model/Question";
 import {Answer} from "./model/Answer";
+import {AnswerForChart} from "./model/AnswerForChart";
+import {AnswerCountRaport} from "./model/AnswerCountRaport";
 
 @Injectable({
   providedIn: 'root'
@@ -60,11 +62,12 @@ export class SurveyRestApiService {
   public getAnswerByQuestion(question:Question)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
-    const options = {
-      headers:headers,
-      body:question
-    };
-    return this.http.get<Array<Answer>>("http://localhost:8080/api/answers/getAnswersByQuestions/",options)
+    return this.http.get<Array<AnswerForChart>>("http://localhost:8080/api/answers/getAnswersByQuestion/"+question.question_id,{headers})
+  }
+  public getRaportAnswersByQuestion(question:Question)
+  {
+    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.get<Array<AnswerCountRaport>>("http://localhost:8080/api/answers/getRaport/"+question.question_id,{headers})
   }
   public deleteSurvey(survey:Survey){
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});

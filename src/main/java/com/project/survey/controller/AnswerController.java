@@ -2,6 +2,7 @@ package com.project.survey.controller;
 
 import com.project.survey.model.Answer;
 import com.project.survey.model.AnswerDTO;
+import com.project.survey.model.IAnswerCountRaport;
 import com.project.survey.model.Question;
 import com.project.survey.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ public class AnswerController {
     {
         return answerService.createAnswer(answer);
     }
-    @GetMapping("/getAnswersByQuestion")
-    public ResponseEntity<List<Answer>> getAnswersByQuestion(@RequestBody Question question)
+    @GetMapping("/getAnswersByQuestion/{question}")
+    public ResponseEntity<List<Answer>> getAnswersByQuestion(@PathVariable Long question)
     {
         return answerService.getAllAnswersByQuestion(question);
+    }
+        @GetMapping("/getRaport/{question}")
+    public ResponseEntity<List<IAnswerCountRaport>> getCountAnswersByQuestion(@PathVariable Long question)
+    {
+        return answerService.getCountAnswersByQuestion(question);
     }
 }

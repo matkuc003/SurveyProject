@@ -25,6 +25,9 @@ import { SurveyViewComponent } from './survey-view/survey-view.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import { ResultsSurveyComponent } from './results-survey/results-survey.component';
+import { ChartsModule } from 'ng2-charts';
+
 export function tokenGetter() {
   return localStorage.getItem("jwt");
 }
@@ -46,6 +49,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     CreateSurveyComponent,
     EditSurveyComponent,
     SurveyViewComponent,
+    ResultsSurveyComponent,
   ],
     imports: [
         BrowserModule,
@@ -62,7 +66,8 @@ const JWT_Module_Options: JwtModuleOptions = {
         MatCardModule,
         MatRadioModule,
         MatTooltipModule,
-        ClipboardModule
+        ClipboardModule,
+        ChartsModule
     ],
   providers: [JwtHelperService, RestApiService],
   bootstrap: [AppComponent]

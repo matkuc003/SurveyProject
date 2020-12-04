@@ -40,10 +40,22 @@ public class AnswerService {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
-    public ResponseEntity<List<Answer>> getAllAnswersByQuestion(Question question){
+    public ResponseEntity<List<Answer>> getAllAnswersByQuestion(Long questionID){
         try{
+            Question question = questionService.getQuestionByID(questionID).getBody();
             List<Answer> answers = answerRepository.findAllByQuestion(question).get();
             return new ResponseEntity<>(answers,HttpStatus.OK);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    public ResponseEntity<List<IAnswerCountRaport>> getCountAnswersByQuestion(Long questionID){
+        try{
+            List<IAnswerCountRaport> raportAnswers = answerRepository.getCountOptionAnswerByQuestion_id(questionID);
+            return new ResponseEntity<>(raportAnswers,HttpStatus.OK);
         }
         catch(Exception ex)
         {

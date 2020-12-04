@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,12 +17,12 @@ import java.util.Set;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long question_id;
+    public Long question_id;
     public String type;
     public String text;
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "question_id")
-    public Set<Option> options;
+    public List<Option> options;
     public Boolean required;
     public String remarks;
     public Boolean hasRemarks;
