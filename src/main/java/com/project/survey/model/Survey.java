@@ -19,6 +19,7 @@ public class Survey {
     @Id
     public UUID survey_id = UUID.randomUUID();
     public String title;
+    public String description;
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "survey_id")
     public List<Question> questions = new ArrayList<>();

@@ -1,28 +1,23 @@
-<p>results-survey works!</p>
-<div  *ngIf="surveyQuestions">
-  <mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile
-    *ngFor="let question of surveyQuestions"
-    [colspan]="2"
-    [rowspan]="2">
-    <div>
-    <mat-radio-group [(ngModel)]="question['chartType']">
-      <mat-radio-button value ="bar">bar</mat-radio-button>
-      <mat-radio-button value ="doughnut">doughnut</mat-radio-button>
-      <mat-radio-button value ="pie">pie</mat-radio-button>
-      <mat-radio-button value ="line">line</mat-radio-button>
-    </mat-radio-group>
-      <canvas baseChart
-          [chartType]="question['chartType']"
-          [datasets]="question['chartDatasets']"
-          [labels]="question['chartLabels']"
-          [colors]="chartColors"
-          [options]="chartOptions"
-          [legend]="true"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
-  </canvas>
-    </div>
-  </mat-grid-tile>
+<div *ngIf="surveyQuestions">
+  <mat-grid-list id="charts" cols="1" rowHeight="4:1">
+    <mat-grid-tile>
+      <button mat-raised-button color="primary" (click)="exportToCSV()">Eksportuj odpowiedzi z bazy danych w formacie CSV</button>
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let question of surveyQuestions let i=index" style="width: 100%; display: block"
+      [colspan]="1"
+      [rowspan]="1">
+        <mat-radio-group [(ngModel)]="question.series[0].type">
+          <mat-radio-button value="column" (change)="onTypeChange(question,'column')">column</mat-radio-button>
+          <mat-radio-button value="bar" (change)="onTypeChange(question,'bar')">bar</mat-radio-button>
+          <mat-radio-button value="pie" (change)="onTypeChange(question,'pie')">pie</mat-radio-button>
+          <mat-radio-button value="line" (change)="onTypeChange(question,'line')">line</mat-radio-button>
+        </mat-radio-group>
+          <highcharts-chart id = "{{question.chart.renderTo}}"
+            [Highcharts]="Highcharts"
+            [options]="question"
+          >
+          </highcharts-chart>
+    </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -16,6 +16,4 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long option_id;
     public String optionText;
-    public String optionColor;
-    public Boolean hasRemarks;
 }

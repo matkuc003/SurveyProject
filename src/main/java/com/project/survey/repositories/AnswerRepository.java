@@ -2,6 +2,7 @@ package com.project.survey.repositories;
 
 import com.project.survey.model.Answer;
 import com.project.survey.model.IAnswerCountRaport;
+import com.project.survey.model.IAnswerRaportByQuestion;
 import com.project.survey.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,13 @@ public interface AnswerRepository extends JpaRepository<Answer,Long> {
             " LEFT JOIN dbo.answer_option as ao ON ao.answer_id = a.answer_id WHERE a.question_id = :question_id" +
             " GROUP BY a.rating_value, ao.option_id, a.question_id", nativeQuery = true)
     List<IAnswerCountRaport> getCountOptionAnswerByQuestion_id(@Param("question_id") Long question_id);
+
+    @Query(value="SELECT u.username,a.answer_id,q.text,q.type,a.rating_value,a.text_area_value,opt.option_text,q.remarks FROM dbo.answers a " +
+            "LEFT JOIN dbo.answer_option ao ON ao.answer_id=a.answer_id " +
+            "LEFT JOIN dbo.user u ON a.user_id=u.id "+
+            "LEFT JOIN dbo.option opt ON ao.option_id = opt.option_id " +
+            "LEFT JOIN dbo.question q ON a.question_id = q.question_id " +
+            "WHERE a.question_id = :question_id", nativeQuery = true)
+    List<IAnswerRaportByQuestion> getAnswerRaportByQuestion_id(@Param("question_id") Long question_id);
 
 }

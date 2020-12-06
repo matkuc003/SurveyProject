@@ -39,9 +39,11 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.userRestApi.getUserByUsername(localStorage.getItem("username")).subscribe(next => this.user = next);
     let surveyTitle = '';
+    let surveyDescription = '';
     let surveyQuestions = new FormArray([]);
     this.surveyForm = new FormGroup({
       'surveyTitle': new FormControl(surveyTitle, [Validators.required]),
+      'surveyDescription': new FormControl(surveyDescription, [Validators.required]),
       'surveyQuestions': surveyQuestions,
       'IsAnonymous': new FormControl(false, [Validators.required])
     });
@@ -84,9 +86,11 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
   addOptionControls(questionType, index) {
     let options = new FormArray([]);
     let showRemarksBox = new FormControl(false);
+    let remarks = new FormControl("Wpisz");
 
       (this.surveyForm.controls.surveyQuestions['controls'][index].controls.questionGroup).addControl('options', options);
       (this.surveyForm.controls.surveyQuestions['controls'][index].controls.questionGroup).addControl('showRemarksBox', showRemarksBox);
+      (this.surveyForm.controls.surveyQuestions['controls'][index].controls.questionGroup).addControl('remarks', remarks);
 
       this.clearFormArray((<FormArray>this.surveyForm.controls.surveyQuestions['controls'][index].controls.questionGroup.controls.options));
 
@@ -123,6 +127,7 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
       let surveyQuestions = formData.surveyQuestions;
       let survey: Survey = {
         title: formData.surveyTitle,
+        description: formData.surveyDescription,
         isAnonymous: formData.IsAnonymous,
         questions: [],
         user: this.user
@@ -142,10 +147,11 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
           "options": [],
           "required": false,
           "remarks": "",
-          "hasRemarks": question.hasRemarks
+          "hasRemarks": false
         }
         if (question.questionGroup.hasOwnProperty('showRemarksBox')) {
           questionItem.hasRemarks = question.questionGroup.showRemarksBox;
+          questionItem.remarks = question.questionGroup.remarks;
         }
 
         if (question.questionGroup.hasOwnProperty('options')) {
@@ -153,17 +159,13 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
             let optionID;
             if(option.option_id===undefined){
               optionID = 0;
-              console.log("here");
             }
             else{
               optionID = option.option_id.value;
             }
             let optionItem: Option = {
               "option_id":optionID,
-              "optionText": option.optionText,
-              "optionColor": "",
-              "hasRemarks": false
-
+              "optionText": option.optionText
             }
             questionItem.options.push(optionItem)
           });

@@ -15,7 +15,7 @@ export class SurveysComponent implements OnInit {
   hostname;
 
   constructor(private snackBar: MatSnackBar, private surveyRestApiService: SurveyRestApiService) {
-    this.hostname = window.location.href;
+    this.hostname = "http://localhost:4200/surveys";
   }
 
   ngOnInit(): void {

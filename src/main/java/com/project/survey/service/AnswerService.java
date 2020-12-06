@@ -29,7 +29,9 @@ public class AnswerService {
             if(answer.getOptionsID()!=null)
                  optionsToSurvey = answer.getOptionsID().stream().map(optionID-> optionService.getOptionByID(optionID).getBody()).collect(Collectors.toList());
             Question question = questionService.getQuestionByID(answer.getQuestionID()).getBody();
-            User user = userService.getUserByLogin(answer.getUsername()).get();
+            User user =null;
+            if(answer.getUsername()!=null)
+                 user = userService.getUserByLogin(answer.getUsername()).get();
             Answer answerToSave = new Answer(0l,user,question,optionsToSurvey,answer.getTextAreaValue(),answer.getRatingValue());
             answerRepository.save(answerToSave);
             return new ResponseEntity<>(true,HttpStatus.OK);
@@ -55,6 +57,17 @@ public class AnswerService {
     public ResponseEntity<List<IAnswerCountRaport>> getCountAnswersByQuestion(Long questionID){
         try{
             List<IAnswerCountRaport> raportAnswers = answerRepository.getCountOptionAnswerByQuestion_id(questionID);
+            return new ResponseEntity<>(raportAnswers,HttpStatus.OK);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    public ResponseEntity<List<IAnswerRaportByQuestion>> getAnswerRaportByQuestion(Long questionID){
+        try{
+            List<IAnswerRaportByQuestion> raportAnswers = answerRepository.getAnswerRaportByQuestion_id(questionID);
             return new ResponseEntity<>(raportAnswers,HttpStatus.OK);
         }
         catch(Exception ex)

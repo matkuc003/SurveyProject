@@ -7,6 +7,7 @@ import {Question} from "./model/Question";
 import {Answer} from "./model/Answer";
 import {AnswerForChart} from "./model/AnswerForChart";
 import {AnswerCountRaport} from "./model/AnswerCountRaport";
+import {AnswerRaportByQuestion} from "./model/AnswerRaportByQuestion";
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,8 @@ export class SurveyRestApiService {
     return this.http.post<any>("http://localhost:8080/api/options/createOption",body,{headers});
   }
   public saveAnswer(answer:Answer){
-    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
-    return this.http.post<any>("http://localhost:8080/api/answers/createAnswer",answer,{headers});
+    //const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.post<any>("http://localhost:8080/api/answers/createAnswer",answer);
   }
   public getOptionByID(optionID: number)
   {
@@ -56,18 +57,23 @@ export class SurveyRestApiService {
   }
   public getSurveyByID(surveyID:String)
   {
-    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
-    return this.http.get<Survey>("http://localhost:8080/api/survey/getSurvey/"+surveyID,{headers})
+    //const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.get<Survey>("http://localhost:8080/api/survey/getSurvey/"+surveyID)
   }
   public getAnswerByQuestion(question:Question)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
     return this.http.get<Array<AnswerForChart>>("http://localhost:8080/api/answers/getAnswersByQuestion/"+question.question_id,{headers})
   }
-  public getRaportAnswersByQuestion(question:Question)
+  public getRaportAnswersByQuestion(question:number)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
-    return this.http.get<Array<AnswerCountRaport>>("http://localhost:8080/api/answers/getRaport/"+question.question_id,{headers})
+    return this.http.get<Array<AnswerCountRaport>>("http://localhost:8080/api/answers/getRaport/"+question,{headers})
+  }
+  public getAnswerRaportForCSV(question:Question)
+  {
+    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.get<Array<AnswerRaportByQuestion>>("http://localhost:8080/api/answers/getRaportByQuestion/"+question.question_id,{headers})
   }
   public deleteSurvey(survey:Survey){
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});

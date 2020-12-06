@@ -1,21 +1,27 @@
-<form [formGroup]="surveyForm" class = "surveyMainForm">
+<form [formGroup]="surveyForm" class="surveyMainForm">
   <mat-form-field class="titleForm">
     <input formControlName="surveyTitle" matInput placeholder="Wprowadź tytuł ankiety" maxlength="255">
-  </mat-form-field><br/>
-  <mat-slide-toggle color = "primary" formControlName="IsAnonymous" class="mb-10">Ankieta anonimowa </mat-slide-toggle><br/>
+  </mat-form-field>
+  <br/>
+  <mat-slide-toggle color="primary" formControlName="IsAnonymous" class="mb-10">Ankieta anonimowa</mat-slide-toggle>
+  <br/>
+  <mat-form-field class="titleForm">
+    <textarea formControlName="surveyDescription" matInput placeholder="Wprowadź opis ankiety"></textarea>
+  </mat-form-field> <br/>
   <div formArrayName="surveyQuestions" class="poll-options">
     <button mat-raised-button color="primary" (click)="onAddQuestion()">Dodaj pytanie</button>
     <ol class="list-style">
-      <li class = "listPoint" *ngFor="let question of surveyForm.get('surveyQuestions')['controls']; let i = index">
+      <li class="listPoint" *ngFor="let question of surveyForm.get('surveyQuestions')['controls']; let i = index">
         <div [formGroup]="question" class="form-group">
           <div>
             <div><br/>
-            <button class="deleteButton" (click)="onDeleteButton(i)" mat-icon-button="warn">
-              <mat-icon>delete</mat-icon>
-            </button>
+              <button class="deleteButton" (click)="onDeleteButton(i)" mat-icon-button="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
             <mat-form-field class="full-width">
-              <input formControlName="questionTitle" matInput placeholder="Wprowadz treść pytania" maxlength="50" [required]="true">
+              <input formControlName="questionTitle" matInput placeholder="Wprowadz treść pytania" maxlength="50"
+                     [required]="true">
             </mat-form-field>
 
             <mat-form-field class="typeSelect">
@@ -33,7 +39,7 @@
                     <li
                       *ngFor="let optionCtrl of question.controls.questionGroup.controls.options.controls let j = index">
                       <div [formGroupName]="j">
-                        <mat-form-field class = "optionForm">
+                        <mat-form-field class="optionForm">
                           <input formControlName="optionText" matInput placeholder="Opcja" maxlength="100">
                         </mat-form-field>
                         <button *ngIf="j>=2" (click)="removeOption(i,j)" mat-icon-button color="warn">
@@ -42,18 +48,19 @@
                       </div>
                     </li>
                     <li>
-                      <button class = "addOptionButt" mat-icon-button color="warn" (click)="addOption(i)">
+                      <button class="addOptionButt" mat-icon-button color="warn" (click)="addOption(i)">
                         <mat-icon>add</mat-icon>
                       </button>
                     </li>
                   </ul>
                   <div
                     *ngIf="question.controls.questionGroup.controls.showRemarksBox">
-                    <mat-slide-toggle color = "primary"  formControlName="showRemarksBox">
+                    <mat-slide-toggle color="primary" formControlName="showRemarksBox">
                       Wyświetl pole uwag
-                    </mat-slide-toggle><br/>
+                    </mat-slide-toggle>
+                    <br/>
                     <mat-form-field class="full-width">
-                      <textarea  style="resize: none;" disabled  matInput placeholder="Uwagi:"></textarea>
+                      <textarea style="resize: none;" enabled matInput placeholder="Uwagi:"></textarea>
                     </mat-form-field>
                   </div>
                 </div>
@@ -64,7 +71,7 @@
                     <li
                       *ngFor="let optionCtrl of question.controls.questionGroup.controls.options.controls let j = index">
                       <div [formGroupName]="j">
-                        <mat-form-field class = "optionForm">
+                        <mat-form-field class="optionForm">
                           <input formControlName="optionText" matInput placeholder="Opcja" maxlength="100">
                         </mat-form-field>
                         <button *ngIf="j>=2" (click)="removeOption(i,j)" mat-icon-button color="warn">
@@ -73,18 +80,19 @@
                       </div>
                     </li>
                     <li>
-                      <button class = "addOptionButt" mat-icon-button color="warn" (click)="addOption(i)">
+                      <button class="addOptionButt" mat-icon-button color="warn" (click)="addOption(i)">
                         <mat-icon>add</mat-icon>
                       </button>
                     </li>
                   </ul>
                   <div
                     *ngIf="question.controls.questionGroup.controls.showRemarksBox">
-                    <mat-slide-toggle color = "primary"  formControlName="showRemarksBox">
+                    <mat-slide-toggle color="primary" formControlName="showRemarksBox">
                       Wyświetl pole uwag
-                    </mat-slide-toggle><br/>
+                    </mat-slide-toggle>
+                    <br/>
                     <mat-form-field class="full-width">
-                      <textarea  style="resize: none;" disabled  matInput placeholder="Uwagi:"></textarea>
+                      <textarea formControlName="remarks" style="resize: none;" enabled matInput placeholder="Uwagi:"></textarea>
                     </mat-form-field>
                   </div>
                 </div>
@@ -95,8 +103,8 @@
         </div>
       </li>
     </ol>
-    <div class = "button-row">
-      <button mat-raised-button color = "primary" [disabled]="!surveyForm.valid" (click)="onSave()">Zapisz</button>
+    <div class="button-row">
+      <button mat-raised-button color="primary" [disabled]="!surveyForm.valid" (click)="onSave()">Zapisz</button>
     </div>
   </div>
 </form>

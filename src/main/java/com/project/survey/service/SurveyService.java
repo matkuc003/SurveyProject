@@ -40,14 +40,9 @@ public class SurveyService {
     public ResponseEntity<Boolean> updateSurvey(String previousSurveyID, Survey survey) {
         try {
             Survey previousSurvey = getOneSurvey(previousSurveyID).getBody();
-            List<Question> previousQuestions = previousSurvey.questions;
             previousSurvey.setQuestions(survey.questions);
-/*            previousQuestions.stream().forEach(question->
-            {
-                question.options.forEach(next-> optionService.deleteByOption(next));
-                questionService.deleteQuestionByQuestion(question);
-            });*/
             previousSurvey.setTitle(survey.title);
+            previousSurvey.setDescription(survey.description);
             previousSurvey.setIsAnonymous(survey.isAnonymous);
             surveyRepository.save(previousSurvey);
             return new ResponseEntity<>(true, HttpStatus.OK);

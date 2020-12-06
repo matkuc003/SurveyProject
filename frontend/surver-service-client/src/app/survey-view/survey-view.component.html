@@ -4,6 +4,9 @@
   </mat-form-field>
   <mat-slide-toggle color="primary" formControlName="IsAnonymous" class="mb-10">Ankieta anonimowa</mat-slide-toggle>
   <br/>
+  <mat-form-field class ="surveyTitleForm">
+    <textarea  rows="5"  matInput formControlName="surveyDescription"></textarea>
+  </mat-form-field><br/>
   <div formArrayName="surveyQuestions" class="poll-options">
     <ol class="list-style">
       <li class="listPoint" *ngFor="let question of surveyForm.get('surveyQuestions')['controls']; let i = index">
@@ -29,8 +32,7 @@
                   </mat-radio-group>
                   <div *ngIf="question.controls.questionGroup.controls.showRemarksBox.value==true">
                     <mat-form-field>
-                      <textarea formControlName="showRemarksBox"
-                                placeholder="Uwagi:"></textarea>
+                      <textarea matInput formControlName="remarks" placeholder="Uwagi:"></textarea>
                     </mat-form-field>
                   </div>
                 </div>
@@ -49,9 +51,7 @@
                   </ul>
                   <div *ngIf="question.controls.questionGroup.controls.showRemarksBox.value==true">
                     <mat-form-field >
-                      <mat-checkbox style="display:none;" formControlName="showRemarksBox">
-                      </mat-checkbox>
-                      <textarea matInput placeholder="Uwagi:"></textarea>
+                      <textarea matInput formControlName="remarks" placeholder="Uwagi:"></textarea>
                     </mat-form-field>
                   </div>
                 </div>
@@ -77,7 +77,7 @@
       </li>
     </ol>
     <div class="button-row">
-      <button mat-raised-button color="primary" [routerLink]="'/home/surveys'"  (click)="onSend()">Wyślij</button>
+      <button mat-raised-button color="primary" (click)="onSend()">Wyślij</button>
     </div>
   </div>
 </form>

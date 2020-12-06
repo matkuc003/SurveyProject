@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Question} from "../model/Question";
 import {Option} from "../model/Option";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SurveyRestApiService} from "../survey-rest-api.service";
 import {Survey} from "../model/Survey";
 import {Answer} from "../model/Answer";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-survey-view',
@@ -24,7 +25,7 @@ export class SurveyViewComponent implements OnInit {
   surveyForm: FormGroup;
   surveyIDToView: String;
 
-  constructor(private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
+  constructor(private router:Router,private snackBar: MatSnackBar, private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
   }
 
   ngOnInit(): void {
@@ -35,7 +36,6 @@ export class SurveyViewComponent implements OnInit {
     this.surveyRestApiService.getSurveyByID(this.surveyIDToView).subscribe(message => {
       this.surveyToView = message;
       this.createFormToEdit()
-      console.log(this.surveyForm)
     });
     for (let index = 0; index < this.starCount; index++) {
       this.ratingArr.push(index);
@@ -45,9 +45,11 @@ export class SurveyViewComponent implements OnInit {
   createFormToEdit() {
     let surveyQuestions = new FormArray([]);
     let surveyTitle = this.surveyToView.title;
+    let surveyDescription = this.surveyToView.description;
     let isAnonymous = this.surveyToView.isAnonymous;
     this.surveyForm = new FormGroup({
       'surveyTitle': new FormControl({value: surveyTitle, disabled: true}, [Validators.required]),
+      'surveyDescription': new FormControl({value: surveyDescription, disabled: true}, [Validators.required]),
       'surveyQuestions': surveyQuestions,
       'IsAnonymous': new FormControl({value: isAnonymous, disabled: true}, [Validators.required])
     });
@@ -59,6 +61,7 @@ export class SurveyViewComponent implements OnInit {
   onAddQuestion(question: Question, index: number) {
     let optionArray = new FormArray([]);
     let showRemarksBox = new FormControl(question.hasRemarks);
+    let remarksText = new FormControl({value: question.remarks, disabled: true});
     question.options.forEach(option => {
       this.addOption(option, optionArray);
     })
@@ -66,7 +69,7 @@ export class SurveyViewComponent implements OnInit {
       'question_id': new FormControl({value: question.question_id, disabled: true}, Validators.required),
       'questionTitle': new FormControl({value: question.text, disabled: true}, Validators.required),
       'questionType': new FormControl(question.type, Validators.required),
-      'questionGroup': new FormGroup({'options': optionArray, 'showRemarksBox': showRemarksBox})
+      'questionGroup': new FormGroup({'options': optionArray, 'showRemarksBox': showRemarksBox, 'remarks': remarksText})
     });
     (<FormArray>this.surveyForm.controls.surveyQuestions).push(surveyQuestionItem);
     this.selectedOption[index] = question.type;
@@ -82,29 +85,38 @@ export class SurveyViewComponent implements OnInit {
   }
 
   onSend() {
-    console.log(this.answerArray);
-    this.multiOptionsID.forEach((options,question)=>{
-      this.createAnswer(null,null,null,question,options);
+    this.multiOptionsID.forEach((options, question) => {
+      this.createAnswer(null, null, null, question, options);
     })
     this.answerArray.forEach(
       (answer) => {
         this.surveyRestApiService.saveAnswer(answer).subscribe(response => {
             this.answerArray.clear();
             this.multiOptionsID.clear();
-            console.log(response)
           }
         );
       }
     )
+    if(this.surveyToView.isAnonymous) {
+      this.snackBar.open("Odpowiedzi zostały przesłane, zarejestruj się w celu stworzenia swojej ankiety.", "Ok", {
+        duration: 10000,
+      });
+      this.router.navigate(['/login']);
+    }
+    else{
+      this.snackBar.open("Odpowiedzi zostały przesłane. Dziękuję :)", "Ok", {
+        duration: 5000,
+      });
+      this.router.navigate(['/home/surveys']);
+    }
+
   }
 
   createAnswer(user, ratingValue, textAreaValue, questionID, optionsID) {
-    let username:string;
-    if(this.surveyToView.isAnonymous)
-    {
+    let username: string;
+    if (this.surveyToView.isAnonymous) {
       username = null;
-    }
-    else{
+    } else {
       username = localStorage.getItem("username");
     }
     let answer: Answer = {
@@ -123,7 +135,6 @@ export class SurveyViewComponent implements OnInit {
   }
 
   radioChange(data, question) {
-    console.log(data.value.option_id, question.controls.question_id.value);
     let questionID = question.controls.question_id.value;
     let optionID = [data.value.option_id];
     this.createAnswer(null, null, null, questionID, optionID);

@@ -24,7 +24,6 @@ export class EditSurveyComponent implements OnInit {
         this.surveyIDToEdit = params.get("id");
         this.surveyRestApiService.getSurveyByID(this.surveyIDToEdit).subscribe(message => {
           this.surveyToEdit = message;
-          console.log(message)
           this.createFormToEdit()
         });
       }
@@ -34,9 +33,11 @@ export class EditSurveyComponent implements OnInit {
   createFormToEdit() {
     let surveyQuestions = new FormArray([]);
     let surveyTitle = this.surveyToEdit.title;
+    let surveyDescription = this.surveyToEdit.description;
     let isAnonymous = this.surveyToEdit.isAnonymous;
       this.surveyToEditFormGroup = new FormGroup({
         'surveyTitle': new FormControl(surveyTitle, [Validators.required]),
+        'surveyDescription': new FormControl(surveyDescription, [Validators.required]),
         'surveyQuestions': surveyQuestions,
         'IsAnonymous': new FormControl(isAnonymous, [Validators.required])
       });
@@ -44,11 +45,11 @@ export class EditSurveyComponent implements OnInit {
       {
         this.onAddQuestion(next);
       })
-      console.log("wyslane")
   }
   onAddQuestion(question:Question) {
     let optionArray = new FormArray([]);
     let showRemarksBox = new FormControl(question.hasRemarks);
+    let remarks = new FormControl(question.remarks);
     question.options.forEach(option=>{
       this.addOption(option,optionArray);
     })
@@ -56,9 +57,8 @@ export class EditSurveyComponent implements OnInit {
       'question_id': new FormControl({value:question.question_id}, Validators.required),
       'questionTitle': new FormControl(question.text, Validators.required),
       'questionType': new FormControl(question.type, Validators.required),
-      'questionGroup': new FormGroup({'options': optionArray,'showRemarksBox': showRemarksBox})
+      'questionGroup': new FormGroup({'options': optionArray,'showRemarksBox': showRemarksBox, 'remarks': remarks})
     });
-    console.log("push");
     (<FormArray>this.surveyToEditFormGroup.controls.surveyQuestions).push(surveyQuestionItem);
 
   }

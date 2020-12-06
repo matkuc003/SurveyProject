@@ -1,9 +1,6 @@
 package com.project.survey.controller;
 
-import com.project.survey.model.Answer;
-import com.project.survey.model.AnswerDTO;
-import com.project.survey.model.IAnswerCountRaport;
-import com.project.survey.model.Question;
+import com.project.survey.model.*;
 import com.project.survey.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +25,14 @@ public class AnswerController {
     {
         return answerService.getAllAnswersByQuestion(question);
     }
-        @GetMapping("/getRaport/{question}")
+    @GetMapping("/getRaport/{question}")
     public ResponseEntity<List<IAnswerCountRaport>> getCountAnswersByQuestion(@PathVariable Long question)
     {
         return answerService.getCountAnswersByQuestion(question);
+    }
+    @GetMapping("/getRaportByQuestion/{question}")
+    public ResponseEntity<List<IAnswerRaportByQuestion>> getAnswerRaportByQuestion(@PathVariable Long question)
+    {
+        return answerService.getAnswerRaportByQuestion(question);
     }
 }

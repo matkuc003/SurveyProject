@@ -9,7 +9,7 @@
     {{tile.title}}
     </div>
     <div class = "buttonsDiv">
-    <button mat-icon-button [routerLink]="['survey-view/',tile.survey_id]">
+    <button mat-icon-button [routerLink]="['survey-view/',tile.isAnonymous,tile.survey_id]">
       <mat-icon>find_in_page</mat-icon>
     </button>
       <button mat-icon-button [routerLink]="['results/',tile.survey_id]">
@@ -18,7 +18,7 @@
     <button mat-icon-button [routerLink]="['edit-survey/',tile.survey_id]">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button (click)="onShare()" [cdkCopyToClipboard]="hostname+'/survey-view/'+tile.survey_id">
+    <button mat-icon-button (click)="onShare()" [cdkCopyToClipboard]="hostname+'/survey-view/'+tile.isAnonymous+'/'+tile.survey_id">
       <mat-icon>share</mat-icon>
     </button>
     <button mat-icon-button (click)="onDelete(tile)">

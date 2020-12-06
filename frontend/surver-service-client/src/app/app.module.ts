@@ -27,6 +27,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { ResultsSurveyComponent } from './results-survey/results-survey.component';
 import { ChartsModule } from 'ng2-charts';
+import {HighchartsChartModule} from "highcharts-angular";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -67,7 +68,8 @@ const JWT_Module_Options: JwtModuleOptions = {
         MatRadioModule,
         MatTooltipModule,
         ClipboardModule,
-        ChartsModule
+        ChartsModule,
+        HighchartsChartModule
     ],
   providers: [JwtHelperService, RestApiService],
   bootstrap: [AppComponent]
