@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public interface IAnswerCountRaport {
  Integer getRating_value();
- BigInteger getOption_id();
+ String getOption_text();
  BigInteger getQuestion_id();
  BigInteger getAnswer_count();
 }

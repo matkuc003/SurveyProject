@@ -15,9 +15,10 @@ import java.util.Optional;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer,Long> {
     Optional<List<Answer>> findAllByQuestion(Question question);
-    @Query(value = "SELECT a.rating_value, ao.option_id, a.question_id, count(a.answer_id) as answer_count FROM dbo.answers as a" +
-            " LEFT JOIN dbo.answer_option as ao ON ao.answer_id = a.answer_id WHERE a.question_id = :question_id" +
-            " GROUP BY a.rating_value, ao.option_id, a.question_id", nativeQuery = true)
+    @Query(value = "SELECT a.rating_value, o.option_text, a.question_id, count(a.answer_id) as answer_count FROM dbo.answers as a" +
+            " LEFT JOIN dbo.answer_option as ao ON ao.answer_id = a.answer_id" +
+            " LEFT JOIN dbo.option as o ON ao.option_id = o.option_id WHERE a.question_id = :question_id" +
+            " GROUP BY a.rating_value, o.option_text, a.question_id", nativeQuery = true)
     List<IAnswerCountRaport> getCountOptionAnswerByQuestion_id(@Param("question_id") Long question_id);
 
     @Query(value="SELECT u.username,a.answer_id,q.text,q.type,a.rating_value,a.text_area_value,opt.option_text,q.remarks FROM dbo.answers a " +

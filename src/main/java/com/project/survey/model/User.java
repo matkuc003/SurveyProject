@@ -24,9 +24,8 @@ public class User {
     private String email;
     private String phoneNumber;
     private int year;
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"),schema = "dbo")
-    private Set<Role> roles;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Role roles;
     private Boolean active;
 
 }

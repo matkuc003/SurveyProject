@@ -28,6 +28,8 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import { ResultsSurveyComponent } from './results-survey/results-survey.component';
 import { ChartsModule } from 'ng2-charts';
 import {HighchartsChartModule} from "highcharts-angular";
+import { ChangePaswordDialogComponent } from './change-pasword-dialog/change-pasword-dialog.component';
+import {MatDialog} from "@angular/material/dialog";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -51,6 +53,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     EditSurveyComponent,
     SurveyViewComponent,
     ResultsSurveyComponent,
+    ChangePaswordDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -69,7 +72,7 @@ const JWT_Module_Options: JwtModuleOptions = {
         MatTooltipModule,
         ClipboardModule,
         ChartsModule,
-        HighchartsChartModule
+        HighchartsChartModule,
     ],
   providers: [JwtHelperService, RestApiService],
   bootstrap: [AppComponent]

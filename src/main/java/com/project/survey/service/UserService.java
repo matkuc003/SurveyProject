@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +37,23 @@ public class UserService {
         return userRepository.findById(id).get();
     }
 
+
+    public ResponseEntity<Boolean> changeUserPassword(String username, String oldPassword, String newPassword){
+        try{
+            User user = getUserByLogin(username).get();
+            String oldPasswordInDB = user.getPassword();
+           Boolean checkIfOldPasswordIsCorrect= bCryptPasswordEncoder.matches(oldPassword,oldPasswordInDB);
+           if(checkIfOldPasswordIsCorrect)
+           {
+               user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+               userRepository.save(user);
+           }
+           return new ResponseEntity<>(true,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+    }
     public Optional<User> getUserByLogin(String username) {
         return userRepository.findByUsername(username);
     }
@@ -49,7 +68,6 @@ public class UserService {
         Optional<User> tmpUser = userRepository.findByUsername(username);
         if (tmpUser.isEmpty())
             return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
-        tmpUser.get().setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         tmpUser.get().setUsername(user.getUsername());
         tmpUser.get().setEmail(user.getEmail());
         tmpUser.get().setPhoneNumber(user.getPhoneNumber());

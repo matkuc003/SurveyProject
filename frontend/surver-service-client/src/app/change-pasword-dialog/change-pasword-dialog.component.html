@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Zmień swoje hasło:</h1>
+<div mat-dialog-content [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Poprzednie hasło:</mat-label>
+    <input  type = "password" matInput formControlName="oldpassword" [(ngModel)]="data.oldpassword">
+    <mat-error *ngIf="oldpassword.hasError('required')">Hasło jest obowiązkowe</mat-error>
+
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nowe hasło:</mat-label>
+    <input matInput type = "password" formControlName="newpassword" [(ngModel)]="data.newpassword" (input)="onPasswordInput()">
+    <mat-error *ngIf="newpassword.hasError('required')">Hasło jest obowiązkowe</mat-error>
+
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Potwierdź nowe hasło:</mat-label>
+    <input matInput type = "password"  formControlName="confirmnewpassword" [(ngModel)]="data.confirmnewpassword" (input)="onPasswordInput()">
+    <mat-error *ngIf="confirmnewpassword.hasError('required')">Potwierdź swoje hasło</mat-error>
+    <mat-error *ngIf="confirmnewpassword.invalid && !confirmnewpassword.hasError('required')">Hasła się nie zgadzają</mat-error>
+
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button *ngIf="confirmnewpassword.valid && !oldpassword.hasError('required')" [mat-dialog-close]="formGroup.value" cdkFocusInitial>Potwierdź</button>
+</div>

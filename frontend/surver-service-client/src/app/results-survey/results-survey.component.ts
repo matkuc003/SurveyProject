@@ -6,31 +6,34 @@ import {Question} from "../model/Question";
 import * as Highcharts from 'highcharts';
 import HC_more from "highcharts/highcharts-more";
 import HC_exporting from "highcharts/modules/exporting";
-import {Options} from "highcharts";
+import {chart, Options} from "highcharts";
 import {AnswerRaportByQuestion} from "../model/AnswerRaportByQuestion";
 import {DownloadCSVService} from "../download-csv.service";
-import {Subscription} from "rxjs";
+
 HC_more(Highcharts);
 HC_exporting(Highcharts);
+let intervalIDs = new Map<number, any>();
 
 @Component({
   selector: 'app-results-survey',
   templateUrl: './results-survey.component.html',
   styleUrls: ['./results-survey.component.css']
 })
-export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
+export class ResultsSurveyComponent implements OnInit, AfterContentInit {
   Highcharts: typeof Highcharts = Highcharts; // required
   surveyID: String;
   surveyToResults: Survey;
   surveyQuestions: Options[];
   resultsForCSV = new Array<AnswerRaportByQuestion>();
-  intervalID: any;
-  intervalSubscribe: Subscription;
   pageChangeEvent: any;
-  constructor(private router:Router,private downloadCSVService: DownloadCSVService, private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
+
+  constructor(private router: Router, private downloadCSVService: DownloadCSVService, private route: ActivatedRoute, private surveyRestApiService: SurveyRestApiService) {
   }
 
   ngOnInit(): void {
+    Highcharts.charts.forEach((next, index) => {
+      Highcharts.charts.splice(index);
+    })
     this.route.paramMap.subscribe(params => {
         this.surveyID = params.get("id");
       }
@@ -40,24 +43,22 @@ export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
       this.createFormToEdit();
     });
   }
- unsubscribePageChangeEvent() {
-    //TODO DESTROY CHARTS ERROR Error: Uncaught (in promise): TypeError: Cannot read property 'forExport' of undefined
-    this.pageChangeEvent.unsubscribe();
-  }
-  ngAfterContentInit():void{
-    this.dataChangeInterval();
+
+  ngAfterContentInit(): void {
     this.pageChangeEvent = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        if (this.intervalID) {
-          this.intervalSubscribe.unsubscribe();
-          console.log("page")
-          this.unsubscribePageChangeEvent();
-          clearInterval(this.intervalID);
-        }
+        intervalIDs.forEach((value) => {
+          if (value) {
+            clearInterval(value);
+          }
+        })
+        this.unsubscribePageChangeEvent();
       }
-    });
+    })
+  };
+  unsubscribePageChangeEvent() {
+    this.pageChangeEvent.unsubscribe();
   }
-
   createFormToEdit() {
     this.surveyQuestions = new Array<Options>();
     this.surveyToResults.questions.forEach((next, index) => {
@@ -66,29 +67,57 @@ export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
   }
 
   onAddQuestion(question: Question, index: number) {
-    let chartDataSets = [];
     let chartLabels = [];
     let data = [];
     question.options.forEach(option => {
       chartLabels.push(option.optionText)
     });
-    this.surveyRestApiService.getRaportAnswersByQuestion(question.question_id).subscribe(message => {
-        console.log(message)
-        message.forEach(raport => {
-          if (raport.option_id != null)
-            data.push(raport.answer_count)
+
+    var myFunction = (dataSeries,question_id) => {
+      let dataTMP = [];
+      this.surveyRestApiService.getRaportAnswersByQuestion(question_id).subscribe(next => {
+        next.forEach(raport => {
+          if (raport.option_text != null) {
+            dataTMP.push({name:raport.option_text,y:raport.answer_count})
+          }
           else if (raport.rating_value != null) {
-            data.push(raport.answer_count)
+            dataTMP.push({name:raport.rating_value,y:raport.answer_count})
+          }
+        })
+      }, error => {
+      }, () => {
+        dataSeries.setData(dataTMP);
+      })
+    };
+
+    this.surveyRestApiService.getRaportAnswersByQuestion(question.question_id).subscribe(message => {
+        message.forEach(raport => {
+          if (raport.option_text != null)
+            data.push({name:raport.option_text,y:raport.answer_count})
+          else if (raport.rating_value != null) {
+            data.push({name:raport.rating_value,y:raport.answer_count})
           }
         })
       },
       error => console.log("error"),
       () => {
-        if (question.type != 'Text' && question.type != 'Rating') {
+        if (question.type != 'Text') {
+          if(question.type=='Rating')
+          {
+            chartLabels.push(1,2,3,4,5);
+          }
           this.surveyQuestions.push({
               chart: {
                 renderTo: "chart" + question.question_id,
                 height: 200,
+                events: {
+                  load: function () {
+                    console.log('load');
+                    intervalIDs.set(question.question_id, setInterval(() => {
+                      myFunction(this.series[0],question.question_id);
+                    }, 5000));
+                  }
+                }
               },
               title: {
                 text: question.text
@@ -97,11 +126,11 @@ export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
                 enabled: false
               },
               xAxis: {
-                categories: chartLabels
+                type: 'category'
               },
               series: [
                 {
-                  type: "bar",
+                  type: "pie",
                   data: data,
                   showInLegend: false,
                   colorByPoint: true,
@@ -115,48 +144,20 @@ export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
                     borderColor: "red"
                   }
                 }
-              }
-            }
-          )
-        } else if (question.type == 'Rating') {
-          this.surveyQuestions.push({
-              chart: {
-                renderTo: "chart" + question.question_id,
-                height: 200
               },
-              title: {
-                text: question.text
-              },
-              credits: {
-                enabled: false
-              },
-              xAxis: {
-                categories: ['1', '2', '3', '4', '5']
-              },
-              series: [
-                {
-                  type: "line",
-                  data: data,
-                  showInLegend: false,
-                  colorByPoint: true
+              tooltip: {
+                formatter: function () {
+                  var sliceIndex = this.point.index;
+                  var sliceName = this.series.chart.axes[0].categories[sliceIndex];
+                  return 'Liczba wybranych odpowiedzi to <b>' + this.y + '</b>';
                 }
-              ],
-              exporting: {
-                enabled: true,
-                chartOptions: {
-                  chart: {
-                    borderWidth: 2,
-                    borderColor: "red"
-                  }
-                }
-              }
+              },
             }
           )
         }
       })
     this.surveyRestApiService.getAnswerRaportForCSV(question).subscribe(message => {
       message.forEach(next => this.resultsForCSV.push(next));
-      console.log(this.resultsForCSV);
     })
   }
 
@@ -165,29 +166,14 @@ export class ResultsSurveyComponent implements OnInit,AfterContentInit  {
   }
 
   onTypeChange(question, newType) {
-    question.series[0].type = newType;
-    Highcharts.chart(question).redraw();
-  }
-
-  dataChangeInterval() {
-    this.intervalID = setInterval(() => {
-      this.surveyQuestions.forEach(option => {
-          let question = option.chart.renderTo.toString().match(/\d+/)[0];
-          console.log(question);
-          let data = [];
-          this.intervalSubscribe = this.surveyRestApiService.getRaportAnswersByQuestion(Number(question)).subscribe(next=>{
-            next.forEach(raport => {
-              if (raport.option_id != null)
-                data.push(raport.answer_count)
-              else if (raport.rating_value != null) {
-                data.push(raport.answer_count)
-              }
-            })
-          },error=>{},()=>{
-            Highcharts.chart(option).series[0].setData(data,true);
-          })
-        }
-      )
-    }, 5000);
+    Highcharts.charts.forEach((next, index) => {
+      if (next === undefined) {
+        console.log('undef');
+      } else if (next.options.chart.renderTo == question.chart.renderTo) {
+        Highcharts.charts[index].series.forEach(next => {
+          next.update({type: newType}, true);
+        })
+      }
+    });
   }
 }

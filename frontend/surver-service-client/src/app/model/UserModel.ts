@@ -6,6 +6,6 @@ export class UserModel {
   email:string;
   phoneNumber:string;
   year: number;
-  roles:any;
+  roles:Role;
   active:boolean;
 }

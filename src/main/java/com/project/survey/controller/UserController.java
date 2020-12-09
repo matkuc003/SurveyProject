@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -58,10 +55,8 @@ public class UserController {
         userTmp.setUsername(user.getUsername());
         userTmp.setEmail(user.getEmail());
         Role role = roleService.findRoleByRole("ROLE_USER").get();
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
 
-        userTmp.setRoles(roles);
+        userTmp.setRoles(role);
 
         if (user.getUsername().equals("")
                 || userService.getUsers().stream().map(User::getUsername).anyMatch(s -> s.equals(user.getUsername()))) {
@@ -89,7 +84,10 @@ public class UserController {
         else
             return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
     }
-
+    @PutMapping("/changePassword")
+    public ResponseEntity<Boolean> changeUserPassword(@RequestBody Map<String,String> body){
+        return userService.changeUserPassword(body.get("username"),body.get("oldPassword"),body.get("newPassword"));
+    }
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable("username") String username) {
         try {

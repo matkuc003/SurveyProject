@@ -5,10 +5,10 @@
       <input matInput [(ngModel)]="userToEdit.username" name="username"/>
     </mat-form-field>
     <br>
-    <mat-form-field class="example-full-width" name="fieldPassword">
-      <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="userToEdit.password" name="password"/>
-    </mat-form-field>
+      <mat-label>Password</mat-label><br/>
+    <div class="example-button-row">
+      <button mat-raised-button (click)="openDialog()">Zmien hasło</button>
+    </div>
     <br>
     <mat-form-field class="example-full-width" name="fieldEmail">
       <mat-label>Email</mat-label>
@@ -27,7 +27,11 @@
     <br>
     <mat-form-field class="example-full-width" name="fieldRoles">
       <mat-label>Roles</mat-label>
-      <input matInput [(ngModel)]="userToEdit.roles.role" name="roles"/>
+      <mat-select name="roles" [(value)]="userToEdit.roles.role">
+      <mat-option [value]="userToEdit.roles.role">
+        {{userToEdit.roles.role}}
+      </mat-option>
+     </mat-select>
     </mat-form-field>
     <br>
     <mat-label>Active</mat-label>

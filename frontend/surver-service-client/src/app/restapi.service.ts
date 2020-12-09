@@ -23,6 +23,11 @@ export class RestApiService {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
     return this.http.put<any>("http://localhost:8080/api/user/change/"+username, data,{headers})
   }
+  public changePassword(username:string,oldPassword:string,newPassword:string)
+  {
+    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.put<any>("http://localhost:8080/api/user/changePassword/", {username,oldPassword,newPassword},{headers})
+  }
   public deleteUser(username: string)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
