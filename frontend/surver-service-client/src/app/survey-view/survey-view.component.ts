@@ -3,7 +3,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Question} from "../model/Question";
 import {Option} from "../model/Option";
 import {ActivatedRoute, Router} from "@angular/router";
-import {SurveyRestApiService} from "../survey-rest-api.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
 import {Survey} from "../model/Survey";
 import {Answer} from "../model/Answer";
 import {MatSnackBar} from "@angular/material/snack-bar";

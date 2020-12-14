@@ -1,5 +1,9 @@
-<div style="height: 88vh;">
-  <mat-table [dataSource]="dataSource">
+<div class="buttons">
+  <button mat-flat-button color="primary" (click)="userButtonClick()" class="userButton">Użytkownicy</button>
+  <button mat-flat-button color="primary" (click)="roleButtonClick()" class="roleButton">Role</button>
+</div>
+<div *ngIf="usersTable" style="height: 88vh;">
+  <mat-table [dataSource]="usersDataSource">
     <!-- User name Definition -->
     <ng-container matColumnDef="username">
       <mat-header-cell *matHeaderCellDef> Username</mat-header-cell>
@@ -18,8 +22,8 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.action}}
-        <button mat-button [routerLink]="['edit/',row.username]">Edit</button>
-        <button mat-button (click)="deleteOnClick(row)">Delete</button>
+        <button mat-button [routerLink]="['edit/',row.username]">Edytuj</button>
+        <button mat-button (click)="deleteOnClick(row)">Usuń</button>
       </mat-cell>
     </ng-container>
 
@@ -27,4 +31,64 @@
     <mat-header-row *matHeaderRowDef="['username', 'role', 'action']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: ['username', 'role', 'action']"></mat-row>
   </mat-table>
+  <button mat-flat-button color="primary" (click)="addUser()">Dodaj użytkownika</button>
+</div>
+<div *ngIf="rolesTable" style="height: 88vh;">
+  <mat-table [dataSource]="rolesDataSource">
+    <!-- User name Definition -->
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef>Nazwa</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field>
+        <input matInput [(ngModel)]="row.role">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Role Definition -->
+    <ng-container matColumnDef="p_admin_panel">
+      <mat-header-cell *matHeaderCellDef>Panel administracyjny</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.p_admin_panel"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="p_create_surveys">
+      <mat-header-cell *matHeaderCellDef>Tworzenie ankiet</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.p_create_surveys"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="p_delete_surveys">
+      <mat-header-cell *matHeaderCellDef>Usuwanie ankiet</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.p_delete_surveys"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="p_edit_surveys">
+      <mat-header-cell *matHeaderCellDef>Edytowanie ankiet</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.p_edit_surveys"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="p_results_surveys">
+      <mat-header-cell *matHeaderCellDef>Wyniki ankiet</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.p_results_surveys"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Action Definition -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.action}}
+        <button mat-button (click)="saveRoleOnClick(row)">Zapisz</button>
+        <button mat-button (click)="deleteRoleOnClick(row)">Usuń</button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="['role', 'p_admin_panel', 'p_create_surveys', 'p_delete_surveys','p_edit_surveys','p_results_surveys','action']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['role', 'p_admin_panel','p_create_surveys','p_delete_surveys','p_edit_surveys','p_results_surveys','action']"></mat-row>
+  </mat-table>
+  <button mat-flat-button color="primary" (click)="addRoleOnClick()">Dodaj role</button>
 </div>

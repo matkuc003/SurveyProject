@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../auth/authentication.service";
-import {RestApiService} from "../restapi.service";
+import {RestApiService} from "../rest-apis/restapi.service";
 import { ActivatedRoute } from '@angular/router';
 import {UserModel} from "../model/UserModel";
 import {Role} from "../model/Role";
@@ -18,6 +18,7 @@ export class EditUserComponent implements OnInit {
   newpassword: string;
   confirmnewpassword: string;
   userToEdit:UserModel;
+  allRoles:Role[];
   constructor(private route:ActivatedRoute,
               public dialog: MatDialog,
               private router:Router,
@@ -35,6 +36,9 @@ export class EditUserComponent implements OnInit {
       this.setUser();
       }
     )
+    this.restApiService.getRoles().subscribe(response=>{
+      this.allRoles=response;
+    })
   }
   setUser(): void{
     this.restApiService.getUserByUsername(this.usernameToEdit).subscribe(

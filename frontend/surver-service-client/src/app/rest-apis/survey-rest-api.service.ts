@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Survey} from "./model/Survey";
+import {Survey} from "../model/Survey";
 import {RestApiService} from "./restapi.service";
-import {Option} from "./model/Option";
-import {Question} from "./model/Question";
-import {Answer} from "./model/Answer";
-import {AnswerForChart} from "./model/AnswerForChart";
-import {AnswerCountRaport} from "./model/AnswerCountRaport";
-import {AnswerRaportByQuestion} from "./model/AnswerRaportByQuestion";
+import {Option} from "../model/Option";
+import {Question} from "../model/Question";
+import {Answer} from "../model/Answer";
+import {AnswerForChart} from "../model/AnswerForChart";
+import {AnswerCountRaport} from "../model/AnswerCountRaport";
+import {AnswerRaportByQuestion} from "../model/AnswerRaportByQuestion";
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
-import {SurveyRestApiService} from "../survey-rest-api.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
 import {AuthenticationService} from "../auth/authentication.service";
 
 @Injectable({
@@ -17,13 +17,11 @@ export class SurveyViewGuardService {
     console.log(this.isAnonymous);
     if(this.isAnonymous=='false') {
       if (!this.auth.isAuthenticated()) {
-        console.log('nieanon');
         this.router.navigate([{outlets:{primary: 'login'}}]);
         return false;
       }
       return true;
     }else if (this.isAnonymous=='true') {
-      console.log('anon');
       return true;
     }
   }

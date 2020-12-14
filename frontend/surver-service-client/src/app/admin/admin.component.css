@@ -1,0 +1,16 @@
+.buttons{
+  margin: 8px 8px 8px 0;
+  display:flex;
+  justify-content: center;
+}
+.roleButton{
+  margin-left: 10px;
+}
+mat-cell {
+  display: flex;
+  justify-content: center;
+}
+mat-header-cell{
+  display: flex;
+  justify-content: center;
+}

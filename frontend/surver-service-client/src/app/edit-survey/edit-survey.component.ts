@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Survey} from "../model/Survey";
 import {Form, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {SurveyRestApiService} from "../survey-rest-api.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
 import {ActivatedRoute} from "@angular/router";
 import {Question} from "../model/Question";
 import {Option} from "../model/Option";

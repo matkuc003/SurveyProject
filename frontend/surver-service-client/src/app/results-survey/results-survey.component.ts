@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
-import {SurveyRestApiService} from "../survey-rest-api.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
 import {Survey} from "../model/Survey";
 import {Question} from "../model/Question";
 import * as Highcharts from 'highcharts';
@@ -8,7 +8,7 @@ import HC_more from "highcharts/highcharts-more";
 import HC_exporting from "highcharts/modules/exporting";
 import {chart, Options} from "highcharts";
 import {AnswerRaportByQuestion} from "../model/AnswerRaportByQuestion";
-import {DownloadCSVService} from "../download-csv.service";
+import {DownloadCSVService} from "../download-csv/download-csv.service";
 
 HC_more(Highcharts);
 HC_exporting(Highcharts);

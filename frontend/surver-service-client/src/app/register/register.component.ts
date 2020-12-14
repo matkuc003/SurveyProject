@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {RestApiService} from "../restapi.service";
 import {Router} from "@angular/router";
 import {UserModel} from "../model/UserModel";
+import {RestApiService} from "../rest-apis/restapi.service";
 
 @Component({
   selector: 'app-register',

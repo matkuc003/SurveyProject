@@ -1,8 +1,11 @@
 package com.project.survey.util;
 
+import com.project.survey.model.Role;
+import com.project.survey.service.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class JwtUtil {
 
     private String SECRET_KEY = "secret";
+    @Autowired
+    private RoleService roleService;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -41,7 +46,13 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         final String authorities = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        final Role role = roleService.findRoleByRole(authorities).get();
         claims.put("role",authorities);
+        claims.put("p_admin_panel",role.getP_admin_panel());
+        claims.put("p_create_surveys",role.getP_create_surveys());
+        claims.put("p_delete_surveys",role.getP_delete_surveys());
+        claims.put("p_edit_surveys",role.getP_edit_surveys());
+        claims.put("p_results_surveys",role.getP_results_surveys());
         return createToken(claims, userDetails.getUsername());
     }
 

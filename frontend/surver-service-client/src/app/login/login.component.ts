@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {RestApiService} from "../restapi.service";
 import {Router} from "@angular/router";
+import {RestApiService} from "../rest-apis/restapi.service";
 
 @Component({
   selector: 'app-login',

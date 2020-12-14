@@ -27,9 +27,9 @@
     <br>
     <mat-form-field class="example-full-width" name="fieldRoles">
       <mat-label>Roles</mat-label>
-      <mat-select name="roles" [(value)]="userToEdit.roles.role">
-      <mat-option [value]="userToEdit.roles.role">
-        {{userToEdit.roles.role}}
+      <mat-select name="roles" [(value)]="userToEdit.roles">
+      <mat-option *ngFor="let role of allRoles" [value]="role">
+        {{role.role}}
       </mat-option>
      </mat-select>
     </mat-form-field>

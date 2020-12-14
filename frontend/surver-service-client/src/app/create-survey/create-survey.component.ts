@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Survey} from "../model/Survey";
-import {SurveyRestApiService} from "../survey-rest-api.service";
-import {RestApiService} from "../restapi.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
+import {RestApiService} from "../rest-apis/restapi.service";
 import {UserModel} from "../model/UserModel";
 import {Option} from "../model/Option";
 import {ActivatedRoute, Router, RouterModule} from "@angular/router";

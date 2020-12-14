@@ -17,6 +17,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Long id;
-    @Column(name = "role")
+    @Column(name = "role",unique = true)
     private String role;
+    private Boolean p_admin_panel = false;
+    private Boolean p_create_surveys = true;
+    private Boolean p_delete_surveys = true;
+    private Boolean p_edit_surveys = true;
+    private Boolean p_results_surveys = true;
 }

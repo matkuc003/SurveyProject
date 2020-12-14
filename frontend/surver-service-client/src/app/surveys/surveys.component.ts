@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SurveyRestApiService} from "../survey-rest-api.service";
+import {SurveyRestApiService} from "../rest-apis/survey-rest-api.service";
 import {Survey} from "../model/Survey";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";

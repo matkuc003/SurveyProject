@@ -11,7 +11,13 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCardModule} from "@angular/material/card";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -28,7 +34,14 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatGridListModule,
+    MatCardModule,
+    MatRadioModule,
+    MatTooltipModule
+
   ],
   exports:[
     MatSliderModule,
@@ -42,7 +55,13 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatGridListModule,
+    MatCardModule,
+    MatRadioModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

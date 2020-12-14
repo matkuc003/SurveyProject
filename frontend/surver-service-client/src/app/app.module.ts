@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RestApiService } from './restapi.service';
+import { RestApiService } from './rest-apis/restapi.service';
 import { HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JwtHelperService, JwtModule, JwtModuleOptions} from "@auth0/angular-jwt";
@@ -64,12 +64,6 @@ const JWT_Module_Options: JwtModuleOptions = {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MaterialModule,
-        MatSelectModule,
-        MatSlideToggleModule,
-        MatGridListModule,
-        MatCardModule,
-        MatRadioModule,
-        MatTooltipModule,
         ClipboardModule,
         ChartsModule,
         HighchartsChartModule,

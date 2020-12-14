@@ -42,6 +42,7 @@ public class UserController {
     public List<User> getUsers() {
         return userService.getUsers();
     }
+
     @PutMapping("/change/{username}")
     public ResponseEntity<Boolean> changeUser(@PathVariable String username, @RequestBody User user) {
     return userService.updateUser(username,user);
@@ -55,7 +56,6 @@ public class UserController {
         userTmp.setUsername(user.getUsername());
         userTmp.setEmail(user.getEmail());
         Role role = roleService.findRoleByRole("ROLE_USER").get();
-
         userTmp.setRoles(role);
 
         if (user.getUsername().equals("")
