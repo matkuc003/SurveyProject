@@ -35,7 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/api/user/create","/api/authenticate","/api/survey/getSurvey/{id}","/api/answers/createAnswer").permitAll().anyRequest().authenticated()
+                .antMatchers("/api/user/create","/api/authenticate","/api/survey/getSurvey/{id}","/api/answers/createAnswer")
+                .permitAll().anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -7,6 +7,7 @@ import {UserModel} from "../model/UserModel";
 import {Role} from "../model/Role";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangePaswordDialogComponent} from "../change-pasword-dialog/change-pasword-dialog.component";
+import {JwtHelperService} from "@auth0/angular-jwt";
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -16,10 +17,12 @@ export class EditUserComponent implements OnInit {
   usernameToEdit:string;
   oldpassword: string;
   newpassword: string;
+  permissionForChangeRole: boolean;
   confirmnewpassword: string;
   userToEdit:UserModel;
   allRoles:Role[];
   constructor(private route:ActivatedRoute,
+              private jwtHelper: JwtHelperService,
               public dialog: MatDialog,
               private router:Router,
               private authenticationService: AuthenticationService,
@@ -39,6 +42,7 @@ export class EditUserComponent implements OnInit {
     this.restApiService.getRoles().subscribe(response=>{
       this.allRoles=response;
     })
+    this.getPermissions();
   }
   setUser(): void{
     this.restApiService.getUserByUsername(this.usernameToEdit).subscribe(
@@ -54,6 +58,11 @@ export class EditUserComponent implements OnInit {
   onCancelClick()
   {
     this.router.navigate(["/home/admin"]);
+  }
+  getPermissions(){
+    let token = localStorage.getItem("jwt");
+    let jwtArray = this.jwtHelper.decodeToken(token);
+    this.permissionForChangeRole = jwtArray['p_admin_panel'];
   }
   openDialog(){
     const dialogRef = this.dialog.open(ChangePaswordDialogComponent, {

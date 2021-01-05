@@ -25,7 +25,7 @@
       <input matInput [(ngModel)]="userToEdit.year" name="year"/>
     </mat-form-field>
     <br>
-    <mat-form-field class="example-full-width" name="fieldRoles">
+    <mat-form-field *ngIf="permissionForChangeRole" class="example-full-width" name="fieldRoles">
       <mat-label>Roles</mat-label>
       <mat-select name="roles" [(value)]="userToEdit.roles">
       <mat-option *ngFor="let role of allRoles" [value]="role">
@@ -33,6 +33,7 @@
       </mat-option>
      </mat-select>
     </mat-form-field>
+    <mat-label *ngIf="!permissionForChangeRole">{{userToEdit.roles.role}}</mat-label><br/>
     <br>
     <mat-label>Active</mat-label>
     <mat-checkbox [(ngModel)]="userToEdit.active" name="active"></mat-checkbox>

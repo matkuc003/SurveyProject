@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+
 @Table(name = "USER", schema = "dbo")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,3 +30,5 @@ public class User {
     private Boolean active;
 
 }
+
+

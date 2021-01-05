@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserModel} from "../model/UserModel";
 import {RestApiService} from "../rest-apis/restapi.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   passConf:string;
   email:string;
 
-  constructor(private service:RestApiService, private router:Router) {}
+  constructor(private snackBar:MatSnackBar,private service:RestApiService, private router:Router) {}
 
   ngOnInit(): void {
   }
@@ -30,6 +31,8 @@ export class RegisterComponent implements OnInit {
     let response = this.service.register(body);
     response.subscribe(data =>{
       this.router.navigate(["/login"])
-    })
+    },error=>{this.snackBar.open("Użytkownik z taką nazwą już istnieje.", "Ok", {
+      duration: 5000,
+    });})
   }
 }

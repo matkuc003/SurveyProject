@@ -27,3 +27,4 @@ public class Question {
     public String remarks;
     public Boolean hasRemarks;
 }
+

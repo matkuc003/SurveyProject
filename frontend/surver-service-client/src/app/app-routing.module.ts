@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {path: "surveys/results/:id", component: ResultsSurveyComponent,canActivate:[ResultsSurveyGuardService]},
       {path: "admin", component: AdminComponent,canActivate:[AdminGuardService]},
-      {path: "admin/edit/:username", component: EditUserComponent,canActivate:[AdminGuardService]},
+      {path: "admin/edit/:username", component: EditUserComponent},
       {path: "surveys", component: SurveysComponent}
     ]
   },
