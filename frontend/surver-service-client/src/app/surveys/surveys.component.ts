@@ -11,7 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class SurveysComponent implements OnInit {
   surveysArray: Array<Survey>;
-  tiles = []
+  tiles = [];
   hostname;
 
   constructor(private snackBar: MatSnackBar, private surveyRestApiService: SurveyRestApiService) {
