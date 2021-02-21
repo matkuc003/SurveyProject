@@ -30,6 +30,7 @@ import { ChartsModule } from 'ng2-charts';
 import {HighchartsChartModule} from "highcharts-angular";
 import { ChangePaswordDialogComponent } from './change-pasword-dialog/change-pasword-dialog.component';
 import {MatDialog} from "@angular/material/dialog";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -67,6 +68,7 @@ const JWT_Module_Options: JwtModuleOptions = {
         ClipboardModule,
         ChartsModule,
         HighchartsChartModule,
+        MatPaginatorModule,
     ],
   providers: [JwtHelperService, RestApiService],
   bootstrap: [AppComponent]

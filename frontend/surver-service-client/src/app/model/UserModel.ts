@@ -5,7 +5,6 @@ export class UserModel {
   password:string;
   email:string;
   phoneNumber:string;
-  year: number;
   roles:Role;
   active:boolean;
 }

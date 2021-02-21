@@ -44,6 +44,7 @@ public class SurveyService {
             previousSurvey.setTitle(survey.title);
             previousSurvey.setDescription(survey.description);
             previousSurvey.setIsAnonymous(survey.isAnonymous);
+            previousSurvey.setLastModificationDate(survey.lastModificationDate);
             surveyRepository.save(previousSurvey);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception ex) {
@@ -64,6 +65,14 @@ public class SurveyService {
         try {
             Survey survey = surveyRepository.findById(UUID.fromString(id)).get();
             return new ResponseEntity<>(survey, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    public ResponseEntity<List<Survey>> getSurveyByPart(String part) {
+        try {
+            List<Survey> surveys = surveyRepository.findAllByPart(part.toUpperCase()).get();
+            return new ResponseEntity<>(surveys, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

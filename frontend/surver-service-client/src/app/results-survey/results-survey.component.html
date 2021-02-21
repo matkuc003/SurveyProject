@@ -8,10 +8,9 @@
       [colspan]="1"
       [rowspan]="1">
         <mat-radio-group>
-          <mat-radio-button value="pie" (change)="onTypeChange(question,'pie')">pie</mat-radio-button>
-          <mat-radio-button value="bar" (change)="onTypeChange(question,'bar')">bar</mat-radio-button>
-          <mat-radio-button value="spline" (change)="onTypeChange(question,'spline')">spline</mat-radio-button>
-          <mat-radio-button value="line" (change)="onTypeChange(question,'line')">line</mat-radio-button>
+          <mat-radio-button value="pie" (change)="onTypeChange(question,'pie')">Kołowy</mat-radio-button>
+          <mat-radio-button value="bar" (change)="onTypeChange(question,'bar')">Kolumnowy</mat-radio-button>
+          <mat-radio-button value="line" (change)="onTypeChange(question,'line')">Punktowy</mat-radio-button>
         </mat-radio-group>
           <highcharts-chart id = "{{question.chart.renderTo}}"
             [Highcharts]="Highcharts"

@@ -1,32 +1,27 @@
 <div style="height: 88vh;">
   <form class="example-form" name="formMain">
     <mat-form-field class="example-full-width" name="fieldUser">
-      <mat-label>Username</mat-label>
+      <mat-label>Nazwa użytkownika</mat-label>
       <input matInput [(ngModel)]="userToEdit.username" name="username"/>
     </mat-form-field>
     <br>
-      <mat-label>Password</mat-label><br/>
+      <mat-label>Hasło</mat-label><br/>
     <div class="example-button-row">
       <button mat-raised-button (click)="openDialog()">Zmien hasło</button>
     </div>
     <br>
     <mat-form-field class="example-full-width" name="fieldEmail">
-      <mat-label>Email</mat-label>
+      <mat-label>E-mail</mat-label>
       <input matInput [(ngModel)]="userToEdit.email" name="email"/>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" name="fieldPhone">
-      <mat-label>PhoneNumber</mat-label>
+      <mat-label>Numer telefonu</mat-label>
       <input matInput [(ngModel)]="userToEdit.phoneNumber" name="phoneNumber"/>
     </mat-form-field>
     <br>
-    <mat-form-field class="example-full-width" name="fieldYear">
-      <mat-label>Year</mat-label>
-      <input matInput [(ngModel)]="userToEdit.year" name="year"/>
-    </mat-form-field>
-    <br>
     <mat-form-field *ngIf="permissionForChangeRole" class="example-full-width" name="fieldRoles">
-      <mat-label>Roles</mat-label>
+      <mat-label>Rola</mat-label>
       <mat-select name="roles" [(value)]="userToEdit.roles">
       <mat-option *ngFor="let role of allRoles" [value]="role">
         {{role.role}}
@@ -35,8 +30,8 @@
     </mat-form-field>
     <mat-label *ngIf="!permissionForChangeRole">{{userToEdit.roles.role}}</mat-label><br/>
     <br>
-    <mat-label>Active</mat-label>
-    <mat-checkbox [(ngModel)]="userToEdit.active" name="active"></mat-checkbox>
+    <mat-label>Aktywny</mat-label><br/>
+    <mat-checkbox [(ngModel)]="userToEdit.active" name="active"> </mat-checkbox>
     <br>
     <div class="example-button-row">
       <button mat-raised-button (click)="onSaveClick()">Zapisz</button>

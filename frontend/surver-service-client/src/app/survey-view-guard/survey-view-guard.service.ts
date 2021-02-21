@@ -14,10 +14,11 @@ export class SurveyViewGuardService {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     this.isAnonymous = route.paramMap.get("anon");
+    let uuid = route.paramMap.get("id");
     console.log(this.isAnonymous);
     if(this.isAnonymous=='false') {
       if (!this.auth.isAuthenticated()) {
-        this.router.navigate([{outlets:{primary: 'login'}}]);
+        this.router.navigate([{outlets:{primary: 'login/'+uuid}}]);
         return false;
       }
       return true;

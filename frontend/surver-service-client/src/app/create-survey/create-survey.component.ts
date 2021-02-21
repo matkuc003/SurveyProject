@@ -130,6 +130,7 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
         description: formData.surveyDescription,
         isAnonymous: formData.IsAnonymous,
         questions: [],
+        lastModificationDate: new Date(),
         user: this.user
       }
       surveyQuestions.forEach((question, index, array) => {
@@ -174,17 +175,22 @@ export class CreateSurveyComponent implements OnInit, OnChanges {
       });
       if(!this.editBool) {
         let response = this.surveyRestApiService.saveSurvey(survey);
-        response.subscribe(next => console.log(next));
+        response.subscribe(next => console.log(next),
+            error=>{},
+          ()=> {this.router.navigate(['/home/surveys'])});
       }
       else{
         let idEditedSurvey;
         console.log(survey);
         this.route.paramMap.subscribe(params => {
           idEditedSurvey = params.get("id");
-          this.surveyRestApiService.updateSurvey(idEditedSurvey,survey).subscribe(message=>console.log(message));
+          this.surveyRestApiService.updateSurvey(idEditedSurvey,survey)
+            .subscribe(message=>console.log(message),
+                error=>{},
+                ()=> {this.router.navigate(['/home/surveys'])});
         })
 
       }
-      this.router.navigate(['/home/surveys']);
+
   }
 }

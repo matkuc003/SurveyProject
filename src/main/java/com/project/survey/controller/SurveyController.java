@@ -38,7 +38,11 @@ public class SurveyController {
         return surveyService.createSurvey(username,survey);
        // return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-
+    @GetMapping("/getSurveysByPart/{part}")
+    public ResponseEntity<List<Survey>> getSurveyByPart(@PathVariable String part)
+    {
+        return surveyService.getSurveyByPart(part);
+    }
     @PutMapping("/updateSurvey/{previousSurveyID}")
     public ResponseEntity<Boolean> updateSurvey(@PathVariable String previousSurveyID,@RequestBody Survey survey){
         return surveyService.updateSurvey(previousSurveyID,survey);

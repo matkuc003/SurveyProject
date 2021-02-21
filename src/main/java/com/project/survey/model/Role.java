@@ -19,9 +19,14 @@ public class Role {
     private Long id;
     @Column(name = "role",unique = true)
     private String role;
+    @Column(nullable = false)
     private Boolean p_admin_panel = false;
+    @Column(nullable = false)
     private Boolean p_create_surveys = true;
+    @Column(nullable = false)
     private Boolean p_delete_surveys = true;
+    @Column(nullable = false)
     private Boolean p_edit_surveys = true;
+    @Column(nullable = false)
     private Boolean p_results_surveys = true;
 }

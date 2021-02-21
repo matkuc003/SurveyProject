@@ -125,6 +125,9 @@ export class ResultsSurveyComponent implements OnInit, AfterContentInit {
               credits: {
                 enabled: false
               },
+              yAxis:{
+                title: {text:'liczba osób'}
+               },
               xAxis: {
                 type: 'category'
               },

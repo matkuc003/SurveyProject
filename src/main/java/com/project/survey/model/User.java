@@ -19,12 +19,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(unique = true, nullable = false)
     private String email;
     private String phoneNumber;
-    private int year;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Role roles;
     private Boolean active;

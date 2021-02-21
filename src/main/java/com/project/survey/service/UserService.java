@@ -71,7 +71,6 @@ public class UserService {
         tmpUser.get().setUsername(user.getUsername());
         tmpUser.get().setEmail(user.getEmail());
         tmpUser.get().setPhoneNumber(user.getPhoneNumber());
-        tmpUser.get().setYear(user.getYear());
         tmpUser.get().setActive(user.getActive());
         tmpUser.get().setRoles(user.getRoles());
 

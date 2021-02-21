@@ -1,12 +1,31 @@
 <h1 class = "pageTitle">TWOJE ANKIETY</h1>
+<div class = "pageTitle">
+<mat-form-field>
+  <mat-label>Znajdź ankietę</mat-label>
+  <input matInput type="text" [(ngModel)]="titleSurveyForSearch" (keydown.enter)="onSearchClick()">
+  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onClearClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+  <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="onSearchClick()">
+    <mat-icon>search</mat-icon>
+  </button>
+</div>
 <mat-grid-list cols="8" rowHeight="2:1">
   <mat-grid-tile
-  *ngFor="let tile of tiles"
+    [colspan]="2"
+    [rowspan]="2">
+    <button mat-icon-button class="addButton"  [routerLink]="'create-survey'">
+      <mat-icon class="addIcon">add</mat-icon>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile
+  *ngFor="let tile of pageSlice"
   [colspan]="2"
   [rowspan]="2">
     <mat-card-content>
     <div class = "titleDiv">
-    {{tile.title}}
+      <b>{{tile.title}}</b>
     </div>
     <div class = "buttonsDiv">
     <button mat-icon-button [routerLink]="['survey-view/',tile.isAnonymous,tile.survey_id]">
@@ -25,13 +44,18 @@
       <mat-icon>delete_forever</mat-icon>
     </button>
     </div>
+      <div class = "titleDiv">
+        Zmodyfikowano: {{tile.lastModificationDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+      </div>
+      <div class = "titleDiv">
+        ID: {{tile.survey_id}}
+      </div>
     </mat-card-content>
   </mat-grid-tile>
-  <mat-grid-tile
-    [colspan]="2"
-    [rowspan]="2">
-    <button mat-icon-button class="addButton"  [routerLink]="'create-survey'">
-      <mat-icon class="addIcon">add</mat-icon>
-    </button>
-  </mat-grid-tile>
 </mat-grid-list>
+<mat-paginator
+              [length]="this.tiles.length"
+               [pageSize]="7"
+               [pageSizeOptions]="[7,14,21]"
+               (page)="onPageChange($event)">
+</mat-paginator>

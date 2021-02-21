@@ -13,24 +13,22 @@ import {EditSurveyComponent} from "./edit-survey/edit-survey.component";
 import {SurveyViewComponent} from "./survey-view/survey-view.component";
 import {ResultsSurveyComponent} from "./results-survey/results-survey.component";
 import {SurveyViewGuardService} from "./survey-view-guard/survey-view-guard.service";
-import {CreateSurveyGuardService} from "./guards/create-survey-guard.service";
-import {EditSurveyGuardService} from "./guards/edit-survey-guard.service";
-import {ResultsSurveyGuardService} from "./guards/results-survey-guard-service";
 import {AdminGuardService} from "./guards/admin-guard-service";
 
 const routes: Routes = [
   {path: "", redirectTo: "login", pathMatch: "full"},
   {path: "login", component: LoginComponent, canActivate: [LoginGuardService]},
+  {path: "login/:id", component: LoginComponent, canActivate: [LoginGuardService]},
   {path: "register", component: RegisterComponent},
   {
     path: "home", component: HomeComponent, canActivate: [AuthGuardService], children: [
-      {path: "surveys/create-survey", component: CreateSurveyComponent, canActivate:[CreateSurveyGuardService]},
-      {path: "surveys/edit-survey/:id", component: EditSurveyComponent, canActivate:[EditSurveyGuardService]},
+      {path: "surveys/create-survey", component: CreateSurveyComponent, canActivate:[AdminGuardService]},
+      {path: "surveys/edit-survey/:id", component: EditSurveyComponent, canActivate:[AdminGuardService]},
       {
         path: "surveys/survey-view/:anon/:id",
         component: SurveyViewComponent
       },
-      {path: "surveys/results/:id", component: ResultsSurveyComponent,canActivate:[ResultsSurveyGuardService]},
+      {path: "surveys/results/:id", component: ResultsSurveyComponent,canActivate:[AdminGuardService]},
       {path: "admin", component: AdminComponent,canActivate:[AdminGuardService]},
       {path: "admin/edit/:username", component: EditUserComponent},
       {path: "surveys", component: SurveysComponent}

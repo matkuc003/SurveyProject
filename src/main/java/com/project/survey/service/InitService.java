@@ -21,22 +21,18 @@ public class InitService {
     }
     @PostConstruct
     public void init() {
-      /* Role r1 = new Role(0l,"ROLE_ADMIN",true,true,true,true,false);
+       /*Role r1 = new Role(0l,"ROLE_ADMIN",true,true,true,true,true);
         Role r2 = new Role(0l,"ROLE_USER",false,true,true,true,true);
 
         r1 = roleRepository.save(r1);
         r2 = roleRepository.save(r2);
-      Role r1 = new Role(0l,"ROLE_ADMIN");
-        Role r2 = new Role(0l,"ROLE_USER");
 
-        r1 = roleRepository.save(r1);
-        r2 = roleRepository.save(r2);
-        User u1 = new User(0L, "jkowalski", "admin", "jkowalski@survey.pl","999888777",18, (r1),true);
-        User u2 = new User(0L, "anowak", "admin", "anowak@survey.pl","999888777",17,(r2),true);
-        User u3 = new User(0L, "abodzio", "admin", "abodzio@survey.pl","999888777",20, (r1),true);
+        User u1 = new User(0L, "jkowalski", "admin", "jkowalski@survey.pl","999888777", (r1),true);
+        User u2 = new User(0L, "anowak", "admin", "anowak@survey.pl","777888999",(r2),true);
+        User u3 = new User(0L, "abodzio", "admin", "abodzio@survey.pl","888777999", (r1),true);
 
         u1 = userService.createUser(u1);
         u2 = userService.createUser(u2);
-        u3 = userService.createUser(u3); */
+        u3 = userService.createUser(u3);*/
     }
 }

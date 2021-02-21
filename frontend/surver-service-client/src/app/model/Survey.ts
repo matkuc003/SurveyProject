@@ -6,5 +6,6 @@ export interface Survey {
   description: string,
   questions: Array<Question>,
   isAnonymous: boolean,
+  lastModificationDate: Date,
   user: UserModel
 }

@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,21 +41,23 @@ class SurveyApplicationTests {
 	UUID uuid  = UUID.fromString("c25e55c2-e3ac-4cce-9bdc-95b3eba33a11");
 	@BeforeEach
 	public void setUp() {
-		 mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		//user
 		User user = userService.getUserByLogin("anowak").get();
 		//options
-		Option option = new Option(0l,"Test opcji");
-		Option optionTwo = new Option(0l,"Test opcjidwa");
 		List<Option> options = new ArrayList<>();
+		Option option = new Option(0l,"Test opcji");
+		Option optionTwo = new Option(0l,"Test opcji dwa");
 		options.add(option);
 		options.add(optionTwo);
 		//questions
 		List<Question> questions = new ArrayList<>();
-		Question question = new Question(0l,"Single choice","Test pytania",options,true,"test uwag",true);
+		Question question = new Question(0l,"Single choice",
+				"Test pytania",options,true,"Test uwag",true);
 		questions.add(question);
 		//survey
-		 survey= new Survey(uuid,"TestTytulTest","opisTest",questions,true,user);
+		 survey= new Survey(uuid,"Test tytul ankiety",
+				 "Test opisu",questions,true,new Date(),user);
 	}
 	protected String mapToJson(Object obj) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();

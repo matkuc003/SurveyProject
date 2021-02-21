@@ -19,7 +19,7 @@ public class Answer {
     @ManyToOne
     private User user;
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
     @ManyToMany
     @JoinTable(name = "answer_option", joinColumns = @JoinColumn(name = "answer_id"), inverseJoinColumns = @JoinColumn(name = "option_id"),schema = "dbo")

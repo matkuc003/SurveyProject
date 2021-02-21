@@ -60,6 +60,11 @@ export class SurveyRestApiService {
     //const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
     return this.http.get<Survey>("http://localhost:8080/api/survey/getSurvey/"+surveyID)
   }
+  public getSurveyByPart(part:String)
+  {
+    const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
+    return this.http.get<Array<Survey>>("http://localhost:8080/api/survey/getSurveysByPart/"+part,{headers})
+  }
   public getAnswerByQuestion(question:Question)
   {
     const headers = new HttpHeaders({'Content-Type':'application/json', Authorization:"Bearer "+localStorage.getItem("jwt")});
