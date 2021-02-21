@@ -1,0 +1,1 @@
+W pliku survey.sql znajduje się dump z przykładowymi danymi PostgreSQL 13
